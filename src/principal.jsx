@@ -2,6 +2,9 @@ import { useState, useEffect } from 'react';
 import './principal.css';
 
 const Principal = ({ userId }) => {
+  // URL base de la API (ahora usando Render)
+  const API_URL = 'https://routineappi.onrender.com';
+
   // Lista inicial de hábitos predefinidos
   const habitosPredefinidos = [
     { id: 1, nombre: "Beber agua", categoria: "Salud", seleccionado: false },
@@ -30,7 +33,7 @@ const Principal = ({ userId }) => {
       setCargando(true);
       setError(null);
       
-      const response = await fetch(`/api/habitos?userId=${userId}`);
+      const response = await fetch(`${API_URL}/api/habitos?userId=${userId}`);
       
       if (!response.ok) {
         throw new Error('Error al cargar hábitos');
@@ -38,13 +41,13 @@ const Principal = ({ userId }) => {
       
       const data = await response.json();
       
-      // Actualizar la lista de hábitos marcando los seleccionados
+      // Actualizar la lista de hábitos
       const habitosActualizados = habitosPredefinidos.map(habito => ({
         ...habito,
         seleccionado: data.some(h => h.id === habito.id)
       }));
       
-      // Agregar hábitos personalizados que no están en los predefinidos
+      // Agregar hábitos personalizados
       const habitosPersonalizados = data.filter(h => 
         !habitosPredefinidos.some(pre => pre.id === h.id)
       ).map(h => ({ ...h, seleccionado: true }));
@@ -54,6 +57,13 @@ const Principal = ({ userId }) => {
     } catch (err) {
       console.error("Error cargando hábitos:", err);
       setError("No se pudieron cargar los hábitos. Intenta nuevamente.");
+      
+      // Intenta cargar desde localStorage como respaldo
+      const habitosLocales = localStorage.getItem(`habitos_${userId}`);
+      if (habitosLocales) {
+        const datosLocales = JSON.parse(habitosLocales);
+        setHabitosSeleccionados(datosLocales);
+      }
     } finally {
       setCargando(false);
     }
@@ -66,30 +76,41 @@ const Principal = ({ userId }) => {
     }
 
     try {
-      const response = await fetch('/api/habitos', {
+      const response = await fetch(`${API_URL}/api/habitos`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
+          'Authorization': `Bearer ${localStorage.getItem('token')}`
         },
         body: JSON.stringify({
           userId,
-          habitos: habitosAGuardar.map(({ id, nombre, categoria }) => ({ id, nombre, categoria }))
+          habitos: habitosAGuardar.map(({ id, nombre, categoria }) => ({ 
+            id, 
+            nombre, 
+            categoria 
+          }))
         }),
       });
       
       if (!response.ok) {
-        throw new Error('Error al guardar hábitos');
+        const errorData = await response.json();
+        throw new Error(errorData.message || 'Error al guardar hábitos');
       }
       
-      return await response.json();
+      const data = await response.json();
+      
+      // Guardar copia local como respaldo
+      localStorage.setItem(`habitos_${userId}`, JSON.stringify(habitosAGuardar));
+      
+      return data;
     } catch (err) {
       console.error("Error guardando hábitos:", err);
-      setError("No se pudieron guardar los hábitos. Intenta nuevamente.");
+      setError(err.message || "No se pudieron guardar los hábitos. Intenta nuevamente.");
       throw err;
     }
   };
 
-  // Cargar hábitos al montar el componente o cambiar userId
+  // Cargar hábitos al montar el componente
   useEffect(() => {
     cargarHabitosUsuario();
   }, [userId]);
@@ -105,28 +126,29 @@ const Principal = ({ userId }) => {
       const nuevosSeleccionados = nuevosHabitos.filter(h => h.seleccionado);
       setHabitosSeleccionados(nuevosSeleccionados);
       
-      // Guardar en el backend
       await guardarHabitosUsuario(nuevosSeleccionados);
     } catch (err) {
       console.error("Error al alternar hábito:", err);
+      setError("Error al actualizar hábitos");
     }
   };
 
   // Función para agregar nuevo hábito personalizado
   const agregarHabitoPersonalizado = async () => {
-    if (nuevoHabito.trim() === '') {
+    if (!nuevoHabito.trim()) {
       setError("Por favor ingresa un nombre para el hábito");
       return;
     }
     
     try {
       const nuevo = {
-        id: Date.now(), // Usamos timestamp como ID temporal
+        id: `custom-${Date.now()}`,
         nombre: nuevoHabito.trim(),
         categoria: "Personalizado",
         seleccionado: true
       };
       
+      // Actualización optimista
       const nuevosHabitos = [...habitos, nuevo];
       const nuevosSeleccionados = [...habitosSeleccionados, nuevo];
       
@@ -135,34 +157,49 @@ const Principal = ({ userId }) => {
       setNuevoHabito('');
       setError(null);
       
-      // Guardar en el backend
       await guardarHabitosUsuario(nuevosSeleccionados);
     } catch (err) {
       console.error("Error agregando hábito:", err);
-      setError("Error al agregar hábito. Intenta nuevamente.");
+      setError("Error al guardar el nuevo hábito");
+      
+      // Revertir cambios
+      setHabitos(habitos.filter(h => h.id !== nuevo.id));
+      setHabitosSeleccionados(habitosSeleccionados.filter(h => h.id !== nuevo.id));
     }
   };
 
-  // Función para eliminar hábito personalizado
+  // Función para eliminar hábito personalizado (VERSIÓN MEJORADA)
   const eliminarHabitoPersonalizado = async (id) => {
     try {
+      // Confirmación antes de eliminar
+      if (!window.confirm("¿Estás seguro de eliminar este hábito?")) {
+        return;
+      }
+
+      // Actualización optimista
       const nuevosHabitos = habitos.filter(h => h.id !== id);
       const nuevosSeleccionados = habitosSeleccionados.filter(h => h.id !== id);
       
       setHabitos(nuevosHabitos);
       setHabitosSeleccionados(nuevosSeleccionados);
       
-      // Guardar en el backend
       await guardarHabitosUsuario(nuevosSeleccionados);
+      
+      console.log("Hábito eliminado correctamente");
     } catch (err) {
       console.error("Error eliminando hábito:", err);
       setError("Error al eliminar hábito. Intenta nuevamente.");
+      
+      // Revertir cambios
+      setHabitos(habitos);
+      setHabitosSeleccionados(habitosSeleccionados);
     }
   };
 
   if (cargando) {
     return (
       <div className="loading-container">
+        <div className="spinner"></div>
         <p>Cargando tus hábitos...</p>
       </div>
     );
@@ -172,7 +209,12 @@ const Principal = ({ userId }) => {
     <div className="habit-management-container">
       <h1 className="habit-management-title">Gestión de Hábitos Diarios</h1>
       
-      {error && <div className="error-message">{error}</div>}
+      {error && (
+        <div className="error-message">
+          {error}
+          <button onClick={() => setError(null)} className="close-error">×</button>
+        </div>
+      )}
       
       <div className="habit-panels-wrapper">
         {/* Panel izquierdo - Hábitos disponibles */}
@@ -194,9 +236,9 @@ const Principal = ({ userId }) => {
             <button 
               className="add-habit-button"
               onClick={agregarHabitoPersonalizado}
-              disabled={!userId}
+              disabled={!userId || cargando}
             >
-              Agregar
+              {cargando ? 'Agregando...' : 'Agregar'}
             </button>
           </div>
 
@@ -217,6 +259,20 @@ const Principal = ({ userId }) => {
                           {habito.seleccionado ? '✓' : ''}
                         </span>
                         <span className="habit-name">{habito.nombre}</span>
+                        
+                        {/* Botón de eliminar para hábitos personalizados */}
+                        {habito.categoria === "Personalizado" && (
+                          <button 
+                            className="delete-habit-button"
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              eliminarHabitoPersonalizado(habito.id);
+                            }}
+                            title="Eliminar hábito"
+                          >
+                            🗑️
+                          </button>
+                        )}
                       </div>
                     ))}
                 </div>
@@ -227,7 +283,7 @@ const Principal = ({ userId }) => {
 
         {/* Panel derecho - Hábitos seleccionados */}
         <div className="selected-habits-panel">
-          <h2>Mis hábitos</h2>
+          <h2>Mis hábitos seleccionados ({habitosSeleccionados.length})</h2>
           
           {habitosSeleccionados.length > 0 ? (
             <ul className="selected-habits-list">
@@ -241,8 +297,9 @@ const Principal = ({ userId }) => {
                         e.stopPropagation();
                         eliminarHabitoPersonalizado(habito.id);
                       }}
+                      title="Eliminar hábito"
                     >
-                      ×
+                      🗑️
                     </button>
                   )}
                 </li>
