@@ -11,11 +11,14 @@ function Login() {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
+  // URL base de la API
+  const API_URL = 'https://routineappi.onrender.com';
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
+    setError('');
 
-    // Validar campos
     if (!correo || !password) {
       setError('Por favor, ingrese su correo y contraseña.');
       setLoading(false);
@@ -23,8 +26,7 @@ function Login() {
     }
 
     try {
-      // Hacer la petición al backend para iniciar sesión
-      const response = await fetch('http://localhost:3000/login', {
+      const response = await fetch(`${API_URL}/login`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -34,23 +36,24 @@ function Login() {
 
       const data = await response.json();
 
-      if (response.ok) {
-        setShowSuccess(true);
-        // Retrasar la redirección para que el usuario vea el mensaje
-        setTimeout(() => {
-          // Si el inicio de sesión es exitoso, redirigir según el rol
-          if (data.usuario.rol === 'admin') {
-            navigate('/admin');
-          } else {
-            navigate('/principal');
-          }
-        }, 2000);
-      } else {
-        // Mostrar mensaje de error del backend
-        setError(data.message || 'Error al iniciar sesión.');
+      if (!response.ok) {
+        throw new Error(data.message || 'Error al iniciar sesión');
       }
-    } catch {
-      setError('Error de conexión con el servidor.');
+
+      // Guardar datos de autenticación
+      localStorage.setItem('authToken', data.token);
+      localStorage.setItem('userEmail', correo);
+      localStorage.setItem('userData', JSON.stringify(data.usuario));
+
+      setShowSuccess(true);
+
+      setTimeout(() => {
+        navigate(data.usuario.rol === 'admin' ? '/admin' : '/principal');
+      }, 1500);
+
+    } catch (err) {
+      console.error('Error en login:', err);
+      setError(err.message || 'Error de conexión con el servidor');
     } finally {
       setLoading(false);
     }
@@ -65,45 +68,78 @@ function Login() {
       <div className="login-box">
         <img src={logop} alt="Logo" className="logo" />
         <h2>Iniciar sesión</h2>
-        {error && <p className="error-message">{error}</p>}
+        
+        {error && (
+          <p className="error-message">
+            {error.includes('conexión') ? (
+              <>
+                Error de conexión. Verifica: <br />
+                1. Tu conexión a internet <br />
+                2. Que la API esté en línea
+              </>
+            ) : (
+              error
+            )}
+          </p>
+        )}
+
         <form onSubmit={handleSubmit}>
           <input
             type="email"
             placeholder="Correo electrónico"
             value={correo}
-            onChange={(e) => setCorreo(e.target.value)}
+            onChange={(e) => {
+              setCorreo(e.target.value);
+              setError('');
+            }}
             required
+            autoFocus
           />
           <input
             type="password"
             placeholder="Contraseña"
             value={password}
-            onChange={(e) => setPassword(e.target.value)}
+            onChange={(e) => {
+              setPassword(e.target.value);
+              setError('');
+            }}
             required
           />
-          <button type="submit" disabled={loading}>
-            {loading ? 'Iniciando sesión...' : 'Iniciar sesión'}
+          <button 
+            type="submit" 
+            disabled={loading}
+            className={loading ? 'loading' : ''}
+          >
+            {loading ? (
+              <>
+                <span className="spinner"></span>
+                Procesando...
+              </>
+            ) : (
+              'Iniciar sesión'
+            )}
           </button>
         </form>
-        <button onClick={handleRegister} className="register-button">
-          Registrar
+
+        <button 
+          onClick={handleRegister} 
+          className="register-button"
+          disabled={loading}
+        >
+          ¿No tienes cuenta? Regístrate
         </button>
       </div>
 
-      {/* Modal de éxito */}
-      <div className={`success-modal ${showSuccess ? 'active' : ''}`}>
-        <div className="success-modal-content">
-          <div className="success-icon">
-            <svg viewBox="0 0 24 24" width="64" height="64" fill="#00a65a">
-              <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
-            </svg>
-          </div>
-          <p className="success-message">¡Sesión iniciada correctamente!</p>
-          <div className="success-loading-bar">
-            <div className="success-loading-progress"></div>
+      {showSuccess && (
+        <div className="success-modal">
+          <div className="success-content">
+            <div className="checkmark">✓</div>
+            <p>¡Autenticación exitosa!</p>
+            <p>Redirigiendo...</p>
+            <div className="progress-bar"></div>
           </div>
         </div>
-      </div>
+      )}
     </div>
   );
 }
