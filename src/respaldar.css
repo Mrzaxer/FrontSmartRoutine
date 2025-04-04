@@ -1,0 +1,60 @@
+/* Estilos generales para la página de respaldo */
+/* Contenedor principal */
+.backup-container {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: #f3f4f6;
+    padding: 2rem;
+  }
+  
+  /* Tarjeta de contenido */
+  .backup-card {
+    background-color: white;
+    padding: 1.5rem;
+    border-radius: 0.5rem;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    max-width: 500px;
+    width: 100%;
+  }
+  
+  /* Título */
+  .backup-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #1f2937;
+    margin-bottom: 1rem;
+  }
+  
+  /* Descripción */
+  .backup-description {
+    color: #4b5563;
+    margin-bottom: 1rem;
+    font-size: 1rem;
+  }
+  
+  /* Botón */
+  .backup-button {
+    background-color: #3b82f6;
+    color: white;
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+    border: none;
+    cursor: pointer;
+    font-weight: 500;
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+    transition: all 0.2s ease;
+  }
+  
+  .backup-button:hover {
+    background-color: #2563eb;
+    transform: translateY(-1px);
+  }
+  
+  .backup-button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }

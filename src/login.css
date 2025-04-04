@@ -1,0 +1,195 @@
+/* Reset completo - Fondo blanco */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body, #root {
+  width: 100%;
+  min-height: 100vh;
+  background-color: white; /* Fondo blanco sólido */
+  font-family: 'Arial', sans-serif;
+}
+
+/* Contenedor principal - blanco */
+.login-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  width: 100vw;
+  background-color: white; /* Fondo blanco */
+  padding: 20px;
+}
+
+/* Tarjeta de login con bordes negros */
+.login-box {
+  background: white;
+  padding: 40px;
+  border-radius: 12px;
+
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1); /* Sombra sutil */
+  width: 100%;
+  max-width: 450px;
+  text-align: center;
+}
+
+/* Logo */
+.logo {
+  width:160px;
+  margin-bottom: 30px;
+  filter: none; /* Elimina efectos de sombra */
+}
+
+/* Título */
+h2 {
+  color: #2c3e50;
+  margin-bottom: 30px;
+  font-size: 24px;
+  font-weight: 600;
+}
+
+/* Campos de entrada */
+input {
+  width: 100%;
+  padding: 15px;
+  border: 2px solid #e0e0e0;
+  border-radius: 8px;
+  font-size: 16px;
+  transition: all 0.3s ease;
+  background-color: white;
+  margin: 10px 0;
+  color: #000; 
+}
+
+input:focus {
+  border-color: #00a65a;
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(0, 166, 90, 0.1);
+}
+
+/* Botones */
+button {
+  width: 100%;
+  padding: 15px;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-top: 10px;
+}
+
+button[type="submit"] {
+  background-color: #7b7b7b;
+  color: white;
+}
+
+button[type="submit"]:hover {
+  background-color: #5c5e5d;
+}
+
+.register-button {
+  background-color: #C34400;
+  color: white;
+}
+
+.register-button:hover {
+  background-color: #1a252f;
+}
+
+/* Mensaje de error */
+.error-message {
+  color: #e74c3c;
+  margin-bottom: 20px;
+  font-size: 14px;
+  padding: 10px;
+  background-color: rgba(231, 76, 60, 0.1);
+  border-radius: 5px;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .login-box {
+    padding: 30px 20px;
+    border-width: 2px;
+  }
+  
+  .logo {
+    width: 150px;
+    margin-bottom: 20px;
+  }
+  
+  h2 {
+    font-size: 20px;
+  }
+}
+/* Agrega esto al final de tu archivo CSS */
+
+/* Estilos para el modal de éxito */
+.success-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s ease;
+}
+
+.success-modal.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+.success-modal-content {
+  background-color: white;
+  padding: 30px;
+  border-radius: 12px;
+  text-align: center;
+  max-width: 400px;
+  width: 90%;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+  transform: translateY(-20px);
+  transition: all 0.3s ease;
+}
+
+.success-modal.active .success-modal-content {
+  transform: translateY(0);
+}
+
+.success-icon {
+  color: #00a65a;
+  font-size: 50px;
+  margin-bottom: 20px;
+}
+
+.success-message {
+  color: #2c3e50;
+  font-size: 18px;
+  margin-bottom: 20px;
+  font-weight: 600;
+}
+
+.success-button {
+  background-color: #00a65a;
+  color: white;
+  padding: 12px 24px;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.success-button:hover {
+  background-color: #008c4a;
+}

@@ -1,0 +1,75 @@
+/* Reset básico */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  html, body {
+    width: 100%;
+    height: 100%;
+    background-image: url('https://imagenes.eleconomista.com.mx/files/image_1000_1000/uploads/2023/10/04/66e4806b00cf7.jpeg'); /* URL de la imagen de fondo */
+    background-color: black;
+    font-family: Arial, sans-serif;
+  }
+  
+  /* Contenedor principal */
+  .usuario-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 100vh;
+    width: 100vw;
+  }
+  
+  /* Barra de navegación */
+  .usuario-navbar {
+    background: rgba(0, 0, 0, 0.7);
+    padding: 15px;
+    width: 100%;
+    text-align: center;
+  }
+  
+  .usuario-navbar ul {
+    list-style: none;
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+  }
+  
+  .usuario-navbar li {
+    display: inline;
+  }
+  
+  .pagos-active {
+    background-color: #04AA6D; /* Color para el enlace activo */
+  }
+  
+  .usuario-navbar a {
+    text-decoration: none;
+    color: white;
+    font-size: 18px;
+    font-weight: bold;
+  }
+  
+  .usuario-navbar a:hover {
+    color: #007bff;
+  }
+  
+  /* Contenido */
+  .usuario-content {
+    margin-top: 50px;
+    text-align: center;
+    color: white;
+  }
+  
+  .usuario-content h1 {
+    font-size: 28px;
+    margin-bottom: 10px;
+  }
+  
+  .usuario-content p {
+    font-size: 18px;
+    opacity: 0.8;
+  }
+  

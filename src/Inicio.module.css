@@ -1,0 +1,229 @@
+/* Reset básico y estilos globales */
+.container {
+  width: 100vw;
+  min-height: 100vh;
+  margin: 0;
+  padding: 0;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  overflow-x: hidden;
+  position: relative;
+  font-family: 'Arial', sans-serif;
+}
+
+
+
+/* Barra de navegación */
+.navbar {
+  width: 100%;
+  height: 80px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background-color: rgba(0, 0, 0, 0);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 40px;
+  z-index: 1000;
+  
+}
+
+.navbarLogo {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.logo {
+  width:99px;
+  height:78px;
+  object-fit: contain;
+}
+
+.navbarTitulo {
+  font-size: 0.8rem;
+  color: rgba(0, 0, 0, 0.644);
+  text-transform: uppercase;
+  margin: 0;
+  letter-spacing: 1px;
+}
+
+/* Contenido principal */
+.contenidoPrincipal {
+  width: 100%;
+  height: calc(100vh - 80px);
+  margin-top: 80px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  box-sizing: border-box;
+  position: relative;
+  z-index: 1;
+}
+
+.cajaInformacion {
+  display: flex;
+  align-items: center;
+  gap: 40px;
+  max-width: 1200px;
+  width: 100%;
+  padding: 40px;
+}
+
+/* Texto de bienvenida */
+.contenidoTexto {
+  flex: 1;
+  text-align: left;
+  color: #333;
+  padding-right: 20px;
+}
+
+.contenidoTexto p:first-child {
+  font-size: 2.0rem;
+  font-weight: bold;
+  margin-bottom: 10px;
+  color: #00a65a;
+}
+
+.contenidoTexto p:last-child {
+  font-size: 1rem;
+  line-height: 1.4;
+  color: #555;
+}
+
+/* Imagen */
+.contenidoImagen {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.logoBienvenida {
+  max-width: 100%;
+  height: auto;
+  max-height: 350px;
+  
+
+  object-fit: contain;
+}
+
+/* Botones compactos */
+.botonesContainer {
+  position: absolute;
+  bottom: 40px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  width: 100%;
+}
+
+.botonAcceder, .botonRegistrar {
+  padding: 0;
+  font-size: 1rem;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  width: 110px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  font-weight: 600;
+}
+
+.botonAcceder {
+  background-color: #9c9c9c;
+  color: white;
+}
+
+.botonRegistrar {
+  background-color: #C34400;
+  color: white;
+}
+
+.botonAcceder:hover {
+  background-color: #008c4a;
+  transform: translateY(-2px);
+}
+
+.botonRegistrar:hover {
+  background-color: #333;
+  transform: translateY(-2px);
+}
+
+/* Responsive Design */
+@media (max-width: 992px) {
+  .cajaInformacion {
+    flex-direction: column;
+    gap: 30px;
+    text-align: center;
+  }
+
+  .contenidoTexto {
+    text-align: center;
+    padding-right: 0;
+  }
+
+  .logoBienvenida {
+    max-height: 280px;
+  }
+}
+
+@media (max-width: 768px) {
+  .navbar {
+    padding: 0 20px;
+  }
+
+  .navbarTitulo {
+    font-size: 1.5rem;
+  }
+
+  .contenidoTexto p:first-child {
+    font-size: 1.3rem;
+  }
+
+  .contenidoTexto p:last-child {
+    font-size: 0.9rem;
+  }
+
+  .botonesContainer {
+    bottom: 20px;
+  }
+
+  .botonAcceder, .botonRegistrar {
+    width: 100px;
+    height: 36px;
+    font-size: 0.9rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .navbar {
+    height: 70px;
+  }
+
+  .navbarTitulo {
+    font-size: 1.2rem;
+  }
+
+  .contenidoPrincipal {
+    height: calc(100vh - 70px);
+    margin-top: 70px;
+    padding: 10px;
+  }
+
+  .cajaInformacion {
+    padding: 20px;
+  }
+
+  .logoBienvenida {
+    max-height: 220px;
+  }
+}

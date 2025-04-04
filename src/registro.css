@@ -1,0 +1,136 @@
+/* Reset y estilos base - Fondo blanco */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body, #root {
+  width: 100%;
+  min-height: 100vh;
+  background-color: white;
+  font-family: 'Arial', sans-serif;
+}
+
+/* Contenedor principal */
+.registro-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  width: 100vw;
+  padding: 20px;
+  background-color: white;
+}
+
+/* Tarjeta de registro con bordes negros */
+.registro-box {
+  background: white;
+  padding: 40px;
+  border-radius: 12px;
+
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 500px; /* Un poco más ancho que el login */
+  text-align: center;
+}
+
+/* Título */
+.registro-box h2 {
+  color: #2c3e50;
+  margin-bottom: 30px;
+  font-size: 24px;
+  font-weight: 600;
+}
+
+/* Campos de entrada */
+.registro-box input {
+  width: 100%;
+  padding: 15px;
+  border: 2px solid #e0e0e000;
+  border-radius: 8px;
+  font-size: 16px;
+  transition: all 0.3s ease;
+  background-color: white;
+  margin: 10px 0;
+  text-align: left; /* Cambiado de center a left */
+  color: #000; 
+}
+
+.registro-box input:focus {
+  border-color: #00a65a;
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(0, 166, 90, 0.1);
+}
+
+/* Botones */
+.registro-box button {
+  width: 100%;
+  padding: 15px;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-top: 15px;
+}
+
+/* Botón Registrar */
+.registro-box button[type="submit"] {
+  background-color: #C34400;
+  color: white;
+}
+
+.registro-box button[type="submit"]:hover {
+  background-color: #ed8e11;
+}
+
+.registro-box button[type="submit"]:disabled {
+  background-color: #95a5a6;
+  cursor: not-allowed;
+}
+
+/* Botón Salir */
+.salir-btn {
+  background-color: #2c3e50;
+  color: white;
+}
+
+.salir-btn:hover {
+  background-color: #1a252f;
+}
+
+/* Mensajes */
+.mensaje {
+  color: #00a65a;
+  margin-bottom: 20px;
+  font-size: 14px;
+  padding: 10px;
+  background-color: rgba(0, 166, 90, 0.1);
+  border-radius: 5px;
+}
+
+.mensaje.error {
+  color: #e74c3c;
+  background-color: rgba(231, 76, 60, 0.1);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .registro-box {
+    padding: 30px 20px;
+    border-width: 2px;
+  }
+  
+  .registro-box h2 {
+    font-size: 20px;
+    margin-bottom: 20px;
+  }
+  
+  .registro-box input,
+  .registro-box button {
+    padding: 12px;
+    font-size: 14px;
+  }
+}
