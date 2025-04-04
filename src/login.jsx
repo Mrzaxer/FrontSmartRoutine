@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './login.css';
-import logop from '/imagenes/estilo.png';
+import logop from '/imagenes/necesidades.png';
 
 function Login() {
   const [correo, setCorreo] = useState('');
@@ -130,13 +130,16 @@ function Login() {
         </button>
       </div>
 
+      {/* Modal de éxito */}
       {showSuccess && (
         <div className="success-modal">
           <div className="success-content">
             <div className="checkmark">✓</div>
             <p>¡Autenticación exitosa!</p>
             <p>Redirigiendo...</p>
-            <div className="progress-bar"></div>
+            <div className="progress-bar">
+              <div className="progress-bar-fill"></div>
+            </div>
           </div>
         </div>
       )}

@@ -1,10 +1,10 @@
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import './registro.css';
 
 function Registro() {
-  // Cambia esta URL por tu endpoint en Render
   const API_URL = 'https://routineappi.onrender.com';
+  const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
     nombre: '',
@@ -14,17 +14,20 @@ function Registro() {
     rol: 'usuario',
   });
 
-  const [mensaje, setMensaje] = useState('');
+  const [error, setError] = useState('');
+  const [showSuccess, setShowSuccess] = useState(false);
   const [loading, setLoading] = useState(false);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
+    setError('');
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
+    setError('');
 
     try {
       const response = await fetch(`${API_URL}/register`, {
@@ -36,23 +39,22 @@ function Registro() {
       });
 
       const data = await response.json();
-      setLoading(false);
 
-      if (response.ok) {
-        setMensaje('Usuario registrado con éxito.');
-        setFormData({
-          nombre: '',
-          telefono: '',
-          correo: '',
-          password: '',
-          rol: 'usuario',
-        });
-      } else {
-        setMensaje(data.message || 'Error al registrar el usuario.');
+      if (!response.ok) {
+        throw new Error(data.message || 'Error al registrar el usuario');
       }
+
+      setShowSuccess(true);
+      
+      setTimeout(() => {
+        navigate('/login');
+      }, 1500);
+
     } catch (error) {
+      console.error('Error en registro:', error);
+      setError(error.message || 'Error de conexión con el servidor');
+    } finally {
       setLoading(false);
-      setMensaje(`Ocurrió un error al conectar con el servidor: ${error.message}`);
     }
   };
 
@@ -60,11 +62,21 @@ function Registro() {
     <div className="registro-container">
       <div className="registro-box">
         <h2>Registro de Usuario</h2>
-        {mensaje && (
-          <p className={`mensaje ${mensaje.includes('éxito') ? '' : 'error'}`}>
-            {mensaje}
+        
+        {error && (
+          <p className="error-message">
+            {error.includes('conexión') ? (
+              <>
+                Error de conexión. Verifica: <br />
+                1. Tu conexión a internet <br />
+                2. Que la API esté en línea
+              </>
+            ) : (
+              error
+            )}
           </p>
         )}
+
         <form onSubmit={handleSubmit}>
           <input
             type="text"
@@ -101,14 +113,40 @@ function Registro() {
             required
           />
         
-          <button type="submit" disabled={loading}>
-            {loading ? 'Registrando...' : 'Registrar'}
+          <button 
+            type="submit" 
+            disabled={loading}
+            className={loading ? 'loading' : ''}
+          >
+            {loading ? (
+              <>
+                <span className="spinner"></span>
+                Registrando...
+              </>
+            ) : (
+              'Registrar'
+            )}
           </button>
         </form>
-        <Link to="/login">
-          <button className="salir-btn">Salir</button>
+
+        <Link to="/login" className="login-link">
+          ¿Ya tienes cuenta? Inicia sesión
         </Link>
       </div>
+
+      {/* Modal de éxito */}
+      {showSuccess && (
+        <div className="success-modal">
+          <div className="success-content">
+            <div className="checkmark">✓</div>
+            <p>¡Registro exitoso!</p>
+            <p>Redirigiendo al login...</p>
+            <div className="progress-bar">
+              <div className="progress-bar-fill"></div>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

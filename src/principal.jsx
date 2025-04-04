@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import './principal.css';
+import habitosIcon from '/imagenes/habitos-icono.png'; // Asegúrate de tener esta imagen en tu carpeta 
 
 const Principal = ({ userId }) => {
   // URL base de la API (ahora usando Render)
@@ -207,8 +208,10 @@ const Principal = ({ userId }) => {
 
   return (
     <div className="habit-management-container">
+       <div className="header-with-image">
       <h1 className="habit-management-title">Gestión de Hábitos Diarios</h1>
-      
+      <img src={habitosIcon} alt="Icono hábitos" className="habit-title-image" />
+      </div>
       {error && (
         <div className="error-message">
           {error}

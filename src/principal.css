@@ -5,13 +5,23 @@
   padding: 1.5rem;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
+.habit-title-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 15px;
+  margin-bottom: 1.5rem;
+}
 
 .habit-management-title {
-  text-align: center;
   color: #2c3e50;
-  margin-bottom: 1.5rem;
   font-size: 1.8rem;
   font-weight: 300;
+  margin: 0; /* Eliminar margen inferior para que lo controle el contenedor */
+}
+.habit-title-image {
+  width: 40px; /* Tamaño pequeño como solicitaste */
+  height: auto;
 }
 
 .error-message {
