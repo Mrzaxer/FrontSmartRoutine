@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import './Principal.css';
+import './principal.css';
 
 const Principal = ({ userId }) => {
   // Lista inicial de hábitos predefinidos

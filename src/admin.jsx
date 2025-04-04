@@ -1,6 +1,6 @@
 
 import { Link } from 'react-router-dom';
-import './Admin.css'; // Asegúrate de que se importa el CSS correcto
+import './admin.css'; // Asegúrate de que se importa el CSS correcto
 
 function Admin() {
   return (

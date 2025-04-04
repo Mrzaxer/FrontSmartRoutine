@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import './Registro.css';
+import './registro.css';
 
 function Registro() {
   const [formData, setFormData] = useState({
