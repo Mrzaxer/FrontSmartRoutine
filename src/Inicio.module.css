@@ -12,8 +12,6 @@
   font-family: 'Arial', sans-serif;
 }
 
-
-
 /* Barra de navegación */
 .navbar {
   width: 100%;
@@ -27,7 +25,6 @@
   align-items: center;
   padding: 0 40px;
   z-index: 1000;
-  
 }
 
 .navbarLogo {
@@ -37,8 +34,8 @@
 }
 
 .logo {
-  width:99px;
-  height:78px;
+  width: 99px;
+  height: 78px;
   object-fit: contain;
 }
 
@@ -73,19 +70,20 @@
   padding: 40px;
 }
 
-/* Texto de bienvenida */
+/* Texto de bienvenida - CAMBIO SOLICITADO */
 .contenidoTexto {
   flex: 1;
   text-align: left;
   color: #333;
   padding-right: 20px;
+  margin-top: -100px; /* Cambiado de 0 a -100px para mover el texto más arriba */
 }
 
 .contenidoTexto p:first-child {
   font-size: 2.0rem;
   font-weight: bold;
   margin-bottom: 10px;
-  color: #00a65a;
+  color: #21c279;
 }
 
 .contenidoTexto p:last-child {
@@ -106,15 +104,13 @@
   max-width: 100%;
   height: auto;
   max-height: 350px;
-  
-
   object-fit: contain;
 }
 
-/* Botones compactos */
+/* Botones - CAMBIO SOLICITADO */
 .botonesContainer {
   position: absolute;
-  bottom: 40px;
+  bottom: 150px; /* Cambiado de 40px a 150px para mover los botones más arriba */
   left: 50%;
   transform: translateX(-50%);
   display: flex;
@@ -149,7 +145,7 @@
 }
 
 .botonAcceder:hover {
-  background-color: #008c4a;
+  background-color: #21c279;
   transform: translateY(-2px);
 }
 
@@ -169,10 +165,15 @@
   .contenidoTexto {
     text-align: center;
     padding-right: 0;
+    margin-top: -50px; /* Ajuste para versión móvil */
   }
 
   .logoBienvenida {
     max-height: 280px;
+  }
+
+  .botonesContainer {
+    bottom: 100px; /* Ajuste para versión móvil */
   }
 }
 
@@ -194,7 +195,7 @@
   }
 
   .botonesContainer {
-    bottom: 20px;
+    bottom: 80px;
   }
 
   .botonAcceder, .botonRegistrar {
@@ -225,5 +226,9 @@
 
   .logoBienvenida {
     max-height: 220px;
+  }
+
+  .botonesContainer {
+    bottom: 60px;
   }
 }

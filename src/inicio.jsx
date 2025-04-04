@@ -1,8 +1,8 @@
 import { useNavigate } from 'react-router-dom';
 import styles from './Inicio.module.css';
-import logo from '/imagenes/iconn.png';            // Ruta desde public/
-import logoBienvenida from '/imagenes/free.png';  // Ruta desde public/
-import fondo from '/imagenes/pordo.png';           // Ruta desde public/
+import logo from '/imagenes/iconn.png';
+import logoBienvenida from '/imagenes/free.png';
+import fondo from '/imagenes/pordos.png';
 
 const Inicio = () => {
   const navigate = useNavigate();
@@ -17,7 +17,6 @@ const Inicio = () => {
 
   return (
     <div className={styles.container} style={{ backgroundImage: `url(${fondo})` }}>
-      {/* Barra de navegación (sin botón Acceder ahora) */}
       <nav className={styles.navbar}>
         <div className={styles.navbarLogo}>
           <img src={logo} alt="Logo" className={styles.logo} />
@@ -25,11 +24,10 @@ const Inicio = () => {
         </div>
       </nav>
 
-      {/* Contenido principal */}
       <div className={styles.contenidoPrincipal}>
         <div className={styles.cajaInformacion}>
           <div className={styles.contenidoTexto}>
-            <p>Bienvenido</p>
+            <p>"Bienvenido"</p>
             <p>"Haz que los pequeños habitos y las grandes metas sean alcanzables"</p>
           </div>
           <div className={styles.contenidoImagen}>
