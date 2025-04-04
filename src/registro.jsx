@@ -77,7 +77,7 @@ function Registro() {
           <input
             type="tel"
             name="telefono"
-            placeholder="Número Telefónico"
+            placeholder="El formato debe ser +52 XX XXXX XXXX"
             value={formData.telefono}
             onChange={handleChange}
             required
