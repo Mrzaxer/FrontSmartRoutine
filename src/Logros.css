@@ -1,0 +1,154 @@
+.logros-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.error-message {
+  color: #d32f2f;
+  background-color: #ffebee;
+  padding: 10px 15px;
+  border-radius: 4px;
+  margin-bottom: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.cargando {
+  text-align: center;
+  padding: 40px;
+  color: #666;
+}
+
+.resumen-logros {
+  margin-bottom: 30px;
+}
+
+.tarjeta-resumen {
+  background: #ffffff;
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  max-width: 400px;
+  margin: 0 auto;
+}
+
+.tarjeta-resumen h3 {
+  margin-top: 0;
+  color: #333;
+}
+
+.tarjeta-resumen .numero {
+  font-size: 24px;
+  font-weight: bold;
+  color: #4caf50;
+}
+
+.tarjeta-resumen .total {
+  font-weight: bold;
+}
+
+.barra-progreso {
+  height: 10px;
+  background: #e0e0e0;
+  border-radius: 5px;
+  margin-top: 10px;
+  overflow: hidden;
+}
+
+.barra-progreso .progreso {
+  height: 100%;
+  background: #4caf50;
+  transition: width 0.3s ease;
+}
+
+.lista-logros h3 {
+  margin-bottom: 20px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #eee;
+}
+
+.logros-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 20px;
+}
+
+.tarjeta-logro {
+  background: #fff;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  display: flex;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.tarjeta-logro:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.tarjeta-logro.desbloqueado {
+  border-left: 4px solid #4caf50;
+}
+
+.tarjeta-logro.bloqueado {
+  opacity: 0.7;
+  border-left: 4px solid #9e9e9e;
+}
+
+.icono-logro {
+  font-size: 40px;
+  padding: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(76, 175, 80, 0.1);
+  color: #4caf50;
+}
+
+.tarjeta-logro.bloqueado .icono-logro {
+  background: rgba(158, 158, 158, 0.1);
+  color: #9e9e9e;
+}
+
+.contenido-logro {
+  padding: 15px;
+  flex: 1;
+}
+
+.contenido-logro h4 {
+  margin: 0 0 5px 0;
+  color: #333;
+}
+
+.contenido-logro p {
+  margin: 0 0 10px 0;
+  color: #666;
+  font-size: 14px;
+}
+
+.estado-logro {
+  font-size: 12px;
+  font-weight: bold;
+}
+
+.desbloqueado-texto {
+  color: #4caf50;
+}
+
+.bloqueado-texto {
+  color: #9e9e9e;
+}
+
+@media (max-width: 768px) {
+  .logros-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .tarjeta-resumen {
+    max-width: 100%;
+  }
+}

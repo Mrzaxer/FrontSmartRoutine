@@ -1,0 +1,185 @@
+.habitos-container {
+  max-width: 700px;
+  margin: 20px auto;
+  font-family: Arial, sans-serif;
+  padding: 20px;
+  background: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0 0 8px rgba(0,0,0,0.1);
+  color: #333;
+}
+
+h2 {
+  margin-bottom: 20px;
+}
+
+/* Formulario */
+.form-habito {
+  background: #fff;
+  padding: 20px;
+  margin-bottom: 30px;
+  border-radius: 8px;
+  box-shadow: 0 0 6px rgba(0,0,0,0.1);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+  align-items: center;
+}
+
+.form-habito input[type="text"],
+.form-habito input[type="time"],
+.form-habito input[type="number"],
+.form-habito select,
+.form-habito textarea {
+  flex: 1 1 45%;
+  padding: 10px;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  color: #333;
+  outline: none;
+  transition: border-color 0.3s ease;
+}
+
+.form-habito input[type="text"]:focus,
+.form-habito input[type="time"]:focus,
+.form-habito input[type="number"]:focus,
+.form-habito select:focus,
+.form-habito textarea:focus {
+  border-color: #4CAF50;
+}
+
+.form-habito textarea {
+  flex-basis: 100%;
+  min-height: 80px;
+  resize: vertical;
+  color: #444;
+}
+
+.dias-semana {
+  flex-basis: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: center;
+  color: #555;
+  font-size: 0.9rem;
+  user-select: none;
+}
+
+.dias-semana label {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  cursor: pointer;
+}
+
+.dias-semana input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  cursor: pointer;
+}
+
+.form-habito button {
+  flex-basis: 100%;
+  padding: 12px;
+  font-weight: bold;
+  font-size: 1.1rem;
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.form-habito button:hover {
+  background-color: #45a049;
+}
+
+/* Botón cancelar */
+.form-habito .boton-cancelar {
+  background-color: #999;
+  margin-top: 10px;
+  flex-basis: 100%;
+}
+
+.form-habito .boton-cancelar:hover {
+  background-color: #666;
+}
+
+/* Lista de hábitos */
+.lista-habitos {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.habito-item {
+  background: white;
+  border: 1px solid #ddd;
+  padding: 15px;
+  margin-bottom: 15px;
+  border-radius: 8px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  box-shadow: 0 0 6px rgba(0,0,0,0.05);
+  color: #333;
+}
+
+.habito-item div {
+  max-width: 70%;
+}
+
+.habito-item .completado {
+  color: green;
+  font-weight: bold;
+  text-decoration: line-through;
+}
+
+.habito-item .temporizador {
+  margin-top: 8px;
+  font-weight: 600;
+  color: #d9534f;
+  font-size: 1rem;
+}
+
+.acciones {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.acciones button {
+  background-color: #2196F3;
+  color: white;
+  border: none;
+  padding: 8px 14px;
+  cursor: pointer;
+  border-radius: 6px;
+  font-size: 0.95rem;
+  transition: background-color 0.3s ease;
+  min-width: 80px;
+}
+
+.acciones button:hover {
+  background-color: #1976d2;
+}
+
+.acciones .boton-eliminar {
+  background-color: #f44336;
+}
+
+.acciones .boton-eliminar:hover {
+  background-color: #d32f2f;
+}
+
+/* Mensaje de error */
+.error-message {
+  color: red;
+  font-weight: 600;
+  margin-bottom: 15px;
+  text-align: center;
+}

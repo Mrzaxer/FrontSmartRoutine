@@ -3,14 +3,16 @@ import { Link, useNavigate } from 'react-router-dom';
 import './registro.css';
 
 function Registro() {
-  const API_URL = 'https://routineappi.onrender.com';
+  const API_URL = 'http://localhost:3000/api/usuarios';
   const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
     nombre: '',
+    email: '',
     telefono: '',
-    correo: '',
     password: '',
+    fecha_nacimiento: '',
+    genero: '',
     rol: 'usuario',
   });
 
@@ -20,7 +22,7 @@ function Registro() {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
+    setFormData(prev => ({ ...prev, [name]: value }));
     setError('');
   };
 
@@ -30,7 +32,7 @@ function Registro() {
     setError('');
 
     try {
-      const response = await fetch(`${API_URL}/register`, {
+      const response = await fetch(`${API_URL}/registrar`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -41,18 +43,18 @@ function Registro() {
       const data = await response.json();
 
       if (!response.ok) {
-        throw new Error(data.message || 'Error al registrar el usuario');
+        throw new Error(data.error || data.message || 'Error al registrar el usuario');
       }
 
       setShowSuccess(true);
-      
+
       setTimeout(() => {
         navigate('/login');
       }, 1500);
 
     } catch (error) {
-      console.error('Error en registro:', error);
-      setError(error.message || 'Error de conexión con el servidor');
+      console.error('Error al registrar usuario:', error);
+      setError(error.message || 'Error desconocido al registrar usuario');
     } finally {
       setLoading(false);
     }
@@ -62,7 +64,7 @@ function Registro() {
     <div className="registro-container">
       <div className="registro-box">
         <h2>Registro de Usuario</h2>
-        
+
         {error && (
           <p className="error-message">
             {error.includes('conexión') ? (
@@ -81,28 +83,25 @@ function Registro() {
           <input
             type="text"
             name="nombre"
-            placeholder="Nombre"
+            placeholder="Nombre completo"
             value={formData.nombre}
+            onChange={handleChange}
+            required
+          />
+          <input
+            type="email"
+            name="email"
+            placeholder="Correo electrónico"
+            value={formData.email}
             onChange={handleChange}
             required
           />
           <input
             type="tel"
             name="telefono"
-            placeholder="El formato debe ser +52 XX XXXX XXXX"
+            placeholder="Teléfono (opcional)"
             value={formData.telefono}
             onChange={handleChange}
-            required
-            pattern="^\+52\s\d{2}\s\d{4}\s\d{4}$"
-            title="El formato debe ser +52 XX XXXX XXXX"
-          />
-          <input
-            type="email"
-            name="correo"
-            placeholder="Correo Electrónico"
-            value={formData.correo}
-            onChange={handleChange}
-            required
           />
           <input
             type="password"
@@ -112,12 +111,21 @@ function Registro() {
             onChange={handleChange}
             required
           />
-        
-          <button 
-            type="submit" 
-            disabled={loading}
-            className={loading ? 'loading' : ''}
-          >
+          <input
+            type="date"
+            name="fecha_nacimiento"
+            placeholder="Fecha de nacimiento"
+            value={formData.fecha_nacimiento}
+            onChange={handleChange}
+          />
+          <select name="genero" value={formData.genero} onChange={handleChange}>
+            <option value="">Selecciona género (opcional)</option>
+            <option value="masculino">Masculino</option>
+            <option value="femenino">Femenino</option>
+            <option value="otro">Otro</option>
+          </select>
+
+          <button type="submit" disabled={loading} className={loading ? 'loading' : ''}>
             {loading ? (
               <>
                 <span className="spinner"></span>
@@ -134,7 +142,6 @@ function Registro() {
         </Link>
       </div>
 
-      {/* Modal de éxito */}
       {showSuccess && (
         <div className="success-modal">
           <div className="success-content">

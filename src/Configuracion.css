@@ -1,0 +1,218 @@
+.configuracion-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.configuracion-tabs {
+  display: flex;
+  border-bottom: 1px solid #ddd;
+  margin-bottom: 20px;
+}
+
+.configuracion-tabs button {
+  padding: 10px 20px;
+  background: none;
+  border: none;
+  border-bottom: 3px solid transparent;
+  cursor: pointer;
+  font-size: 16px;
+  transition: all 0.3s;
+}
+
+.configuracion-tabs button:hover {
+  background: #f5f5f5;
+}
+
+.configuracion-tabs button.active {
+  border-bottom-color: #4caf50;
+  font-weight: bold;
+}
+
+.configuracion-contenido {
+  background: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.mensaje {
+  padding: 10px 15px;
+  border-radius: 4px;
+  margin-bottom: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.mensaje.error {
+  background-color: #ffebee;
+  color: #d32f2f;
+}
+
+.mensaje.exito {
+  background-color: #e8f5e9;
+  color: #2e7d32;
+}
+
+.mensaje button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+  color: inherit;
+}
+
+.cargando {
+  text-align: center;
+  padding: 40px;
+  color: #666;
+}
+
+/* Estilos para la sección de perfil */
+.seccion-perfil .avatar-container {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+  gap: 20px;
+}
+
+.avatar {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid #ddd;
+}
+
+.avatar-actions p {
+  margin: 5px 0 0 0;
+  font-size: 12px;
+  color: #666;
+}
+
+.btn-cambiar-avatar {
+  padding: 8px 15px;
+  background: #4caf50;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.btn-cambiar-avatar:hover {
+  background: #3e8e41;
+}
+
+/* Estilos para formularios */
+.form-group {
+  margin-bottom: 15px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: 500;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 16px;
+}
+
+.form-group input[type="checkbox"] {
+  width: auto;
+  margin-right: 10px;
+}
+
+.checkbox-group {
+  display: flex;
+  align-items: center;
+}
+
+/* Estilos para la sección de seguridad */
+.requisitos-password {
+  background: #f5f5f5;
+  padding: 10px 15px;
+  border-radius: 4px;
+  margin: 15px 0;
+}
+
+.requisitos-password p {
+  margin-top: 0;
+  font-weight: 500;
+}
+
+.requisitos-password ul {
+  margin-bottom: 0;
+  padding-left: 20px;
+}
+
+.requisitos-password li {
+  font-size: 14px;
+}
+
+/* Botón de guardar */
+.btn-guardar {
+  padding: 10px 20px;
+  background: #4caf50;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background 0.3s;
+  margin-top: 10px;
+}
+
+.btn-guardar:hover {
+  background: #3e8e41;
+}
+
+/* Estilos responsivos */
+@media (max-width: 768px) {
+  .configuracion-tabs {
+    flex-direction: column;
+  }
+  
+  .configuracion-tabs button {
+    border-bottom: none;
+    border-left: 3px solid transparent;
+    text-align: left;
+  }
+  
+  .configuracion-tabs button.active {
+    border-bottom: none;
+    border-left-color: #4caf50;
+  }
+  
+  .seccion-perfil .avatar-container {
+    flex-direction: column;
+    text-align: center;
+  }
+}
+
+/* Estilos para tema oscuro */
+body.tema-oscuro .configuracion-contenido {
+  background: #333;
+  color: #fff;
+}
+
+body.tema-oscuro .form-group input,
+body.tema-oscuro .form-group select {
+  background: #444;
+  color: #fff;
+  border-color: #555;
+}
+
+body.tema-oscuro .requisitos-password {
+  background: #444;
+  color: #ddd;
+}

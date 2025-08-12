@@ -11,8 +11,7 @@ function Login() {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
-  // URL base de la API
-  const API_URL = 'https://routineappi.onrender.com';
+  const API_URL = 'http://localhost:3000/api/usuarios';
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -28,27 +27,43 @@ function Login() {
     try {
       const response = await fetch(`${API_URL}/login`, {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ correo, password }),
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email: correo, password }), // usar "email" para backend
       });
 
       const data = await response.json();
 
-      if (!response.ok) {
-        throw new Error(data.message || 'Error al iniciar sesión');
+      if (!response.ok) throw new Error(data.message || 'Error al iniciar sesión');
+
+      if (data.token) {
+        localStorage.setItem('authToken', data.token);
+      } else {
+        console.error('No se recibió token en la respuesta:', data);
       }
 
-      // Guardar datos de autenticación
-      localStorage.setItem('authToken', data.token);
-      localStorage.setItem('userEmail', correo);
+      if (data.usuario) {
       localStorage.setItem('userData', JSON.stringify(data.usuario));
+
+      // 🔹 Detectar id o _id y guardarlo
+      const usuarioId = data.usuario.id || data.usuario._id;
+      if (usuarioId) {
+        localStorage.setItem('userId', usuarioId);
+      } else {
+        console.warn('No se recibió ID de usuario en la respuesta.');
+      }
+    } else {
+      console.error('No se recibió usuario en la respuesta:', data);
+    }
+
 
       setShowSuccess(true);
 
       setTimeout(() => {
-        navigate(data.usuario.rol === 'admin' ? '/admin' : '/principal');
+        if (data.usuario && data.usuario.rol === 'admin') {
+          navigate('/admin');
+        } else {
+          navigate('/principal');
+        }
       }, 1500);
 
     } catch (err) {
@@ -68,7 +83,7 @@ function Login() {
       <div className="login-box">
         <img src={logop} alt="Logo" className="logo" />
         <h2>Iniciar sesión</h2>
-        
+
         {error && (
           <p className="error-message">
             {error.includes('conexión') ? (
@@ -77,9 +92,7 @@ function Login() {
                 1. Tu conexión a internet <br />
                 2. Que la API esté en línea
               </>
-            ) : (
-              error
-            )}
+            ) : error}
           </p>
         )}
 
@@ -105,8 +118,8 @@ function Login() {
             }}
             required
           />
-          <button 
-            type="submit" 
+          <button
+            type="submit"
             disabled={loading}
             className={loading ? 'loading' : ''}
           >
@@ -121,8 +134,8 @@ function Login() {
           </button>
         </form>
 
-        <button 
-          onClick={handleRegister} 
+        <button
+          onClick={handleRegister}
           className="register-button"
           disabled={loading}
         >
@@ -130,7 +143,6 @@ function Login() {
         </button>
       </div>
 
-      {/* Modal de éxito */}
       {showSuccess && (
         <div className="success-modal">
           <div className="success-content">
