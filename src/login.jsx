@@ -28,7 +28,7 @@ function Login() {
       const response = await fetch(`${API_URL}/login`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email: correo, password }), // usar "email" para backend
+        body: JSON.stringify({ email: correo, password }),
       });
 
       const data = await response.json();
@@ -42,19 +42,12 @@ function Login() {
       }
 
       if (data.usuario) {
-      localStorage.setItem('userData', JSON.stringify(data.usuario));
-
-      // 🔹 Detectar id o _id y guardarlo
-      const usuarioId = data.usuario.id || data.usuario._id;
-      if (usuarioId) {
-        localStorage.setItem('userId', usuarioId);
-      } else {
-        console.warn('No se recibió ID de usuario en la respuesta.');
+        localStorage.setItem('userData', JSON.stringify(data.usuario));
+        const usuarioId = data.usuario.id || data.usuario._id;
+        if (usuarioId) {
+          localStorage.setItem('userId', usuarioId);
+        }
       }
-    } else {
-      console.error('No se recibió usuario en la respuesta:', data);
-    }
-
 
       setShowSuccess(true);
 
@@ -80,44 +73,68 @@ function Login() {
 
   return (
     <div className="login-container">
+      <div className="login-background"></div>
       <div className="login-box">
-        <img src={logop} alt="Logo" className="logo" />
+        <div className="logo-container">
+          <img src={logop} alt="Logo" className="logo" />
+          <h1 className="app-title">SMART ROUTINE</h1>
+          <p className="app-subtitle">Organiza tu vida, alcanza tus metas</p>
+        </div>
+        
         <h2>Iniciar sesión</h2>
 
         {error && (
-          <p className="error-message">
-            {error.includes('conexión') ? (
-              <>
-                Error de conexión. Verifica: <br />
-                1. Tu conexión a internet <br />
-                2. Que la API esté en línea
-              </>
-            ) : error}
-          </p>
+          <div className="error-message">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+              <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/>
+            </svg>
+            <div>
+              {error.includes('conexión') ? (
+                <>
+                  <strong>Error de conexión</strong>
+                  <p>Verifica tu conexión a internet y que la API esté en línea</p>
+                </>
+              ) : (
+                <p>{error}</p>
+              )}
+            </div>
+          </div>
         )}
 
         <form onSubmit={handleSubmit}>
-          <input
-            type="email"
-            placeholder="Correo electrónico"
-            value={correo}
-            onChange={(e) => {
-              setCorreo(e.target.value);
-              setError('');
-            }}
-            required
-            autoFocus
-          />
-          <input
-            type="password"
-            placeholder="Contraseña"
-            value={password}
-            onChange={(e) => {
-              setPassword(e.target.value);
-              setError('');
-            }}
-            required
-          />
+          <div className="input-group">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+              <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
+            </svg>
+            <input
+              type="email"
+              placeholder="Correo electrónico"
+              value={correo}
+              onChange={(e) => {
+                setCorreo(e.target.value);
+                setError('');
+              }}
+              required
+              autoFocus
+            />
+          </div>
+
+          <div className="input-group">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+              <path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1 1.71 0 3.1 1.39 3.1 3.1v2z"/>
+            </svg>
+            <input
+              type="password"
+              placeholder="Contraseña"
+              value={password}
+              onChange={(e) => {
+                setPassword(e.target.value);
+                setError('');
+              }}
+              required
+            />
+          </div>
+
           <button
             type="submit"
             disabled={loading}
@@ -134,20 +151,22 @@ function Login() {
           </button>
         </form>
 
-        <button
-          onClick={handleRegister}
-          className="register-button"
-          disabled={loading}
-        >
-          ¿No tienes cuenta? Regístrate
-        </button>
+        <div className="login-footer">
+          <p>¿No tienes cuenta? <button onClick={handleRegister} className="register-button">Regístrate</button></p>
+          <a href="#" className="forgot-password">¿Olvidaste tu contraseña?</a>
+        </div>
       </div>
 
       {showSuccess && (
         <div className="success-modal">
           <div className="success-content">
-            <div className="checkmark">✓</div>
-            <p>¡Autenticación exitosa!</p>
+            <div className="checkmark-circle">
+              <svg className="checkmark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52">
+                <circle className="checkmark-circle-bg" cx="26" cy="26" r="25"/>
+                <path className="checkmark-check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8"/>
+              </svg>
+            </div>
+            <h3>¡Autenticación exitosa!</h3>
             <p>Redirigiendo...</p>
             <div className="progress-bar">
               <div className="progress-bar-fill"></div>

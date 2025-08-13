@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import './Habitos.css';
 
-const DIAS_SEMANA = ['lunes', 'martes', 'miercoles', 'jueves', 'viernes', 'sabado', 'domingo'];
+const DIAS_SEMANA = ['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado', 'Domingo'];
 
 const Habitos = () => {
   const [habitos, setHabitos] = useState([]);
@@ -113,19 +113,15 @@ const Habitos = () => {
 
   const puedeCompletar = (habito) => {
     const ahora = new Date();
-    const diaActual = DIAS_SEMANA[ahora.getDay() - 1] || 'domingo'; // Ajuste para domingo
+    const diaActual = DIAS_SEMANA[ahora.getDay() - 1] || 'Domingo';
     
-    // Verificar si hoy es uno de los días programados
     const dias = Array.isArray(habito.diasSemana) ? habito.diasSemana : [];
     if (!dias.includes(diaActual)) return false;
     
-    // Verificar si ya está completado
     if (habito.estado === 'completado') return false;
     
-    // Verificar si tiene hora y duración
     if (!habito.horaObjetivo || !habito.duracionMinutos) return true;
     
-    // Calcular si ya pasó el tiempo
     const [h, m] = habito.horaObjetivo.split(':').map(Number);
     const inicio = new Date(ahora);
     inicio.setHours(h, m, 0, 0);
@@ -147,7 +143,6 @@ const Habitos = () => {
     }
   };
 
-  // Temporizador para mostrar tiempo restante durante la ejecución
   const [temporizadores, setTemporizadores] = useState({});
 
   const calcularSegundosRestantes = (habito) => {
@@ -209,121 +204,202 @@ const Habitos = () => {
 
   return (
     <div className="habitos-container">
-      <h2>Mis Hábitos</h2>
+      <h2 className="section-title">Mis Hábitos</h2>
 
       <div className="form-habito">
-        <input
-          name="titulo"
-          value={formHabito.titulo}
-          onChange={handleChange}
-          placeholder="Título"
-          required
-        />
-        <input
-          name="descripcion"
-          value={formHabito.descripcion}
-          onChange={handleChange}
-          placeholder="Descripción"
-        />
-        <input
-          type="time"
-          name="horaObjetivo"
-          value={formHabito.horaObjetivo}
-          onChange={handleChange}
-          placeholder="Hora objetivo"
-        />
-        <input
-          type="number"
-          name="duracionMinutos"
-          value={formHabito.duracionMinutos}
-          onChange={handleChange}
-          placeholder="Duración (minutos)"
-          min="0"
-        />
-        <textarea
-          name="comentarios"
-          value={formHabito.comentarios}
-          onChange={handleChange}
-          placeholder="Comentarios"
-        />
-
-        <div className="dias-semana">
-          <label>Días para repetir:</label>
-          {DIAS_SEMANA.map(dia => (
-            <label key={dia}>
-              <input
-                type="checkbox"
-                name="diasSemana"
-                value={dia}
-                checked={formHabito.diasSemana.includes(dia)}
-                onChange={handleChange}
-              />
-              {dia}
-            </label>
-          ))}
+        <div className="form-group">
+          <label>Título del hábito</label>
+          <input
+            name="titulo"
+            value={formHabito.titulo}
+            onChange={handleChange}
+            placeholder="Ej: Meditación matutina"
+            required
+          />
         </div>
 
-        {modoEdicion ? (
-          <>
-            <button onClick={actualizarHabito}>Actualizar</button>
-            <button onClick={() => {
-              setModoEdicion(false);
-              setHabitoEditando(null);
-              setFormHabito({
-                titulo: '',
-                descripcion: '',
-                horaObjetivo: '',
-                duracionMinutos: 0,
-                comentarios: '',
-                diasSemana: [],
-              });
-              setError(null);
-            }}>Cancelar</button>
-          </>
-        ) : (
-          <button onClick={agregarHabito}>Agregar Hábito</button>
-        )}
+        <div className="form-group">
+          <label>Descripción</label>
+          <input
+            name="descripcion"
+            value={formHabito.descripcion}
+            onChange={handleChange}
+            placeholder="Ej: Meditar 10 minutos al despertar"
+          />
+        </div>
+
+        <div className="form-row">
+          <div className="form-group">
+            <label>Hora objetivo</label>
+            <input
+              type="time"
+              name="horaObjetivo"
+              value={formHabito.horaObjetivo}
+              onChange={handleChange}
+            />
+          </div>
+
+          <div className="form-group">
+            <label>Duración (minutos)</label>
+            <input
+              type="number"
+              name="duracionMinutos"
+              value={formHabito.duracionMinutos}
+              onChange={handleChange}
+              min="0"
+            />
+          </div>
+        </div>
+
+        <div className="form-group">
+          <label>Comentarios</label>
+          <textarea
+            name="comentarios"
+            value={formHabito.comentarios}
+            onChange={handleChange}
+            placeholder="Notas adicionales sobre este hábito"
+          />
+        </div>
+
+        <div className="form-group">
+          <label>Días de la semana</label>
+          <div className="dias-semana">
+            {DIAS_SEMANA.map(dia => (
+              <label key={dia} className="dia-checkbox">
+                <input
+                  type="checkbox"
+                  name="diasSemana"
+                  value={dia}
+                  checked={formHabito.diasSemana.includes(dia)}
+                  onChange={handleChange}
+                />
+                <span>{dia.substring(0, 3)}</span>
+              </label>
+            ))}
+          </div>
+        </div>
+
+        {error && <div className="error-message">{error}</div>}
+
+        <div className="form-actions">
+          {modoEdicion ? (
+            <>
+              <button className="btn-primary" onClick={actualizarHabito}>
+                Actualizar Hábito
+              </button>
+              <button 
+                className="btn-secondary" 
+                onClick={() => {
+                  setModoEdicion(false);
+                  setHabitoEditando(null);
+                  setFormHabito({
+                    titulo: '',
+                    descripcion: '',
+                    horaObjetivo: '',
+                    duracionMinutos: 0,
+                    comentarios: '',
+                    diasSemana: [],
+                  });
+                  setError(null);
+                }}
+              >
+                Cancelar
+              </button>
+            </>
+          ) : (
+            <button className="btn-primary" onClick={agregarHabito}>
+              Agregar Nuevo Hábito
+            </button>
+          )}
+        </div>
       </div>
 
-      {error && <p className="error-message">{error}</p>}
-
-      <ul className="lista-habitos">
-        {habitos.map(h => {
-          const temp = temporizadores[h._id];
-          const estaActivo = !!temp;
-          const puedeComp = puedeCompletar(h);
-          return (
-            <li key={h._id} className="habito-item">
-              <div>
-                <strong>{h.titulo}</strong> <br />
-                <small>{h.descripcion}</small> <br />
-                Hora: {h.horaObjetivo} - Duración: {h.duracionMinutos} min <br />
-                Días: {(h.diasSemana || []).join(', ')} <br />
-                Comentarios: {h.comentarios} <br />
-                Estado: <span className={h.estado === 'completado' ? 'completado' : ''}>{h.estado}</span>
-                {estaActivo && (
-                  <p className="temporizador">
-                    Tiempo restante: {temp.minutos.toString().padStart(2, '0')}:
-                    {temp.segundos.toString().padStart(2, '0')}
-                  </p>
-                )}
-              </div>
-              <div className="acciones">
-                <button onClick={() => editarHabito(h)}>Editar</button>
-                <button onClick={() => borrarHabito(h._id)}>Borrar</button>
-                {puedeComp && (
+      <div className="lista-habitos">
+        {habitos.length === 0 ? (
+          <div className="empty-state">
+            <p>No tienes hábitos registrados aún</p>
+            <p>¡Comienza agregando tu primer hábito!</p>
+          </div>
+        ) : (
+          habitos.map(h => {
+            const temp = temporizadores[h._id];
+            const estaActivo = !!temp;
+            const puedeComp = puedeCompletar(h);
+            
+            return (
+              <div key={h._id} className={`habito-card ${h.estado === 'completado' ? 'completed' : ''}`}>
+                <div className="habito-header">
+                  <h3>{h.titulo}</h3>
+                  <span className={`habito-status ${h.estado}`}>
+                    {h.estado === 'completado' ? '✅ Completado' : '⏳ Pendiente'}
+                  </span>
+                </div>
+                
+                {h.descripcion && <p className="habito-desc">{h.descripcion}</p>}
+                
+                <div className="habito-details">
+                  <div className="detail">
+                    <span className="detail-label">Hora:</span>
+                    <span>{h.horaObjetivo || 'No especificada'}</span>
+                  </div>
+                  
+                  <div className="detail">
+                    <span className="detail-label">Duración:</span>
+                    <span>{h.duracionMinutos} minutos</span>
+                  </div>
+                  
+                  <div className="detail">
+                    <span className="detail-label">Días:</span>
+                    <span>{(h.diasSemana || []).join(', ') || 'No especificados'}</span>
+                  </div>
+                  
+                  {h.comentarios && (
+                    <div className="detail">
+                      <span className="detail-label">Notas:</span>
+                      <span>{h.comentarios}</span>
+                    </div>
+                  )}
+                  
+                  {estaActivo && (
+                    <div className="temporizador">
+                      <span className="detail-label">Tiempo restante:</span>
+                      <span>
+                        {temp.minutos.toString().padStart(2, '0')}:
+                        {temp.segundos.toString().padStart(2, '0')}
+                      </span>
+                    </div>
+                  )}
+                </div>
+                
+                <div className="habito-actions">
                   <button 
-                    onClick={() => completarHabito(h._id)}
-                    className="completar-btn"
+                    className="btn-edit"
+                    onClick={() => editarHabito(h)}
                   >
-                    Completar
+                    Editar
                   </button>
-                )}
+                  
+                  <button 
+                    className="btn-delete"
+                    onClick={() => borrarHabito(h._id)}
+                  >
+                    Eliminar
+                  </button>
+                  
+                  {puedeComp && (
+                    <button 
+                      className="btn-complete"
+                      onClick={() => completarHabito(h._id)}
+                    >
+                      Completar
+                    </button>
+                  )}
+                </div>
               </div>
-            </li>
-          );
-        })}
-      </ul>
+            );
+          })
+        )}
+      </div>
     </div>
   );
 };

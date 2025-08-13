@@ -1,185 +1,375 @@
-.habitos-container {
-  max-width: 700px;
-  margin: 20px auto;
-  font-family: Arial, sans-serif;
-  padding: 20px;
-  background: #f9f9f9;
-  border-radius: 8px;
-  box-shadow: 0 0 8px rgba(0,0,0,0.1);
-  color: #333;
+/* Variables de color */
+:root {
+  --primary: #FF6B35;
+  --primary-light: #FF9E58;
+  --primary-dark: #E05A2B;
+  --secondary: #004E89;
+  --accent: #FFD166;
+  --light: #F7F7F7;
+  --dark: #333333;
+  --gray: #E0E0E0;
+  --error: #D32F2F;
+  --success: #388E3C;
+  --warning: #FFA000;
 }
 
-h2 {
-  margin-bottom: 20px;
+/* Estilos base */
+.habitos-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 2rem;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.section-title {
+  color: var(--primary);
+  font-size: 2rem;
+  margin-bottom: 2rem;
+  text-align: center;
+  position: relative;
+}
+
+.section-title::after {
+  content: '';
+  display: block;
+  width: 60px;
+  height: 4px;
+  background: var(--primary);
+  margin: 0.5rem auto;
+  border-radius: 2px;
 }
 
 /* Formulario */
 .form-habito {
-  background: #fff;
-  padding: 20px;
-  margin-bottom: 30px;
+  background: white;
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  margin-bottom: 2rem;
+}
+
+.form-group {
+  margin-bottom: 1.5rem;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+  color: var(--dark);
+}
+
+.form-group input,
+.form-group textarea,
+.form-group select {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border: 1px solid var(--gray);
   border-radius: 8px;
-  box-shadow: 0 0 6px rgba(0,0,0,0.1);
-  display: flex;
-  flex-wrap: wrap;
-  gap: 15px;
-  align-items: center;
-}
-
-.form-habito input[type="text"],
-.form-habito input[type="time"],
-.form-habito input[type="number"],
-.form-habito select,
-.form-habito textarea {
-  flex: 1 1 45%;
-  padding: 10px;
   font-size: 1rem;
-  border: 1px solid #ccc;
-  border-radius: 6px;
-  color: #333;
+  transition: all 0.3s;
+}
+
+.form-group input:focus,
+.form-group textarea:focus,
+.form-group select:focus {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(255, 107, 53, 0.2);
   outline: none;
-  transition: border-color 0.3s ease;
 }
 
-.form-habito input[type="text"]:focus,
-.form-habito input[type="time"]:focus,
-.form-habito input[type="number"]:focus,
-.form-habito select:focus,
-.form-habito textarea:focus {
-  border-color: #4CAF50;
-}
-
-.form-habito textarea {
-  flex-basis: 100%;
-  min-height: 80px;
+.form-group textarea {
+  min-height: 100px;
   resize: vertical;
-  color: #444;
+}
+
+.form-row {
+  display: flex;
+  gap: 1rem;
+}
+
+.form-row .form-group {
+  flex: 1;
 }
 
 .dias-semana {
-  flex-basis: 100%;
   display: flex;
+  gap: 0.5rem;
   flex-wrap: wrap;
-  gap: 10px;
-  align-items: center;
-  color: #555;
-  font-size: 0.9rem;
-  user-select: none;
 }
 
-.dias-semana label {
+.dia-checkbox {
   display: flex;
+  flex-direction: column;
   align-items: center;
-  gap: 5px;
   cursor: pointer;
 }
 
-.dias-semana input[type="checkbox"] {
-  width: 18px;
-  height: 18px;
-  cursor: pointer;
+.dia-checkbox input {
+  display: none;
 }
 
-.form-habito button {
-  flex-basis: 100%;
-  padding: 12px;
-  font-weight: bold;
-  font-size: 1.1rem;
-  background-color: #4CAF50;
+.dia-checkbox span {
+  display: inline-block;
+  padding: 0.5rem 0.75rem;
+  background: white;
+  border: 1px solid var(--gray);
+  border-radius: 6px;
+  font-size: 0.9rem;
+  transition: all 0.3s;
+}
+
+.dia-checkbox input:checked + span {
+  background: var(--primary);
+  color: white;
+  border-color: var(--primary);
+}
+
+.form-actions {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+
+.btn-primary {
+  background: var(--primary);
   color: white;
   border: none;
-  border-radius: 6px;
+  padding: 0.75rem 1.5rem;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
   cursor: pointer;
-  transition: background-color 0.3s ease;
+  transition: all 0.3s;
+  flex: 1;
 }
 
-.form-habito button:hover {
-  background-color: #45a049;
+.btn-primary:hover {
+  background: var(--primary-dark);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-/* Botón cancelar */
-.form-habito .boton-cancelar {
-  background-color: #999;
-  margin-top: 10px;
-  flex-basis: 100%;
+.btn-secondary {
+  background: white;
+  color: var(--primary);
+  border: 1px solid var(--primary);
+  padding: 0.75rem 1.5rem;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s;
+  flex: 1;
 }
 
-.form-habito .boton-cancelar:hover {
-  background-color: #666;
+.btn-secondary:hover {
+  background: rgba(255, 107, 53, 0.1);
+  transform: translateY(-2px);
 }
 
 /* Lista de hábitos */
 .lista-habitos {
-  list-style: none;
-  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.empty-state {
+  text-align: center;
+  padding: 2rem;
+  background: var(--light);
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  color: var(--dark);
+}
+
+.habito-card {
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  padding: 1.5rem;
+  transition: all 0.3s;
+}
+
+.habito-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.12);
+}
+
+.habito-card.completed {
+  border-left: 4px solid var(--success);
+}
+
+.habito-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.habito-header h3 {
+  color: var(--dark);
+  font-size: 1.25rem;
   margin: 0;
 }
 
-.habito-item {
+.habito-status {
+  font-size: 0.9rem;
+  font-weight: 600;
+  padding: 0.25rem 0.75rem;
+  border-radius: 20px;
+}
+
+.habito-status.pendiente {
+  background: rgba(255, 166, 0, 0.1);
+  color: var(--warning);
+}
+
+.habito-status.completado {
+  background: rgba(56, 142, 60, 0.1);
+  color: var(--success);
+}
+
+.habito-desc {
+  color: #555;
+  margin-bottom: 1rem;
+  line-height: 1.5;
+}
+
+/* ESTILOS ACTUALIZADOS PARA LOS DETALLES */
+.habito-details {
+  background: var(--light);
+  padding: 1rem;
+  border-radius: 8px;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 0.75rem;
+  margin-bottom: 1.5rem;
+}
+
+.detail {
   background: white;
-  border: 1px solid #ddd;
-  padding: 15px;
-  margin-bottom: 15px;
+  padding: 0.75rem;
+  border-radius: 6px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.detail-label {
+  color: var(--primary);
+  font-size: 0.8rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  text-transform: uppercase;
+}
+
+.detail span {
+  color: var(--dark);
+  font-size: 0.95rem;
+  display: block;
+}
+
+.temporizador {
+  background: linear-gradient(135deg, var(--primary-light), var(--primary));
+  color: white;
+  padding: 0.75rem;
   border-radius: 8px;
   display: flex;
+  align-items: center;
   justify-content: space-between;
-  align-items: flex-start;
-  flex-wrap: wrap;
-  box-shadow: 0 0 6px rgba(0,0,0,0.05);
-  color: #333;
+  grid-column: 1 / -1;
 }
 
-.habito-item div {
-  max-width: 70%;
-}
-
-.habito-item .completado {
-  color: green;
-  font-weight: bold;
-  text-decoration: line-through;
-}
-
-.habito-item .temporizador {
-  margin-top: 8px;
-  font-weight: 600;
-  color: #d9534f;
-  font-size: 1rem;
-}
-
-.acciones {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
-
-.acciones button {
-  background-color: #2196F3;
+.temporizador .detail-label {
   color: white;
+  opacity: 0.9;
+  margin-bottom: 0;
+}
+
+.habito-actions {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.btn-edit, .btn-delete, .btn-complete {
+  padding: 0.5rem 1rem;
   border: none;
-  padding: 8px 14px;
-  cursor: pointer;
   border-radius: 6px;
-  font-size: 0.95rem;
-  transition: background-color 0.3s ease;
-  min-width: 80px;
-}
-
-.acciones button:hover {
-  background-color: #1976d2;
-}
-
-.acciones .boton-eliminar {
-  background-color: #f44336;
-}
-
-.acciones .boton-eliminar:hover {
-  background-color: #d32f2f;
-}
-
-/* Mensaje de error */
-.error-message {
-  color: red;
+  font-size: 0.9rem;
   font-weight: 600;
-  margin-bottom: 15px;
-  text-align: center;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.btn-edit {
+  background: rgba(33, 150, 243, 0.1);
+  color: var(--secondary);
+}
+
+.btn-edit:hover {
+  background: rgba(33, 150, 243, 0.2);
+}
+
+.btn-delete {
+  background: rgba(211, 47, 47, 0.1);
+  color: var(--error);
+}
+
+.btn-delete:hover {
+  background: rgba(211, 47, 47, 0.2);
+}
+
+.btn-complete {
+  background: rgba(56, 142, 60, 0.1);
+  color: var(--success);
+}
+
+.btn-complete:hover {
+  background: rgba(56, 142, 60, 0.2);
+}
+
+/* Mensajes de error */
+.error-message {
+  background: rgba(211, 47, 47, 0.1);
+  color: var(--error);
+  padding: 1rem;
+  border-radius: 8px;
+  margin-top: 1rem;
+  font-size: 0.9rem;
+  border-left: 4px solid var(--error);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .form-row {
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+  
+  .habito-details {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 480px) {
+  .habitos-container {
+    padding: 1rem;
+  }
+  
+  .form-habito {
+    padding: 1.5rem;
+  }
+  
+  .form-actions {
+    flex-direction: column;
+  }
+  
+  .habito-actions {
+    flex-direction: column;
+  }
+  
+  .btn-edit, .btn-delete, .btn-complete {
+    width: 100%;
+  }
 }

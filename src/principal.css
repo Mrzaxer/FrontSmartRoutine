@@ -1,16 +1,20 @@
-/* Estilos generales */
+/* Variables de color */
 :root {
-  --primary-color: #4a6fa5;
-  --secondary-color: #166088;
-  --accent-color: #4fc3f7;
-  --light-color: #f8f9fa;
-  --dark-color: #343a40;
-  --success-color: #28a745;
-  --danger-color: #dc3545;
-  --warning-color: #ffc107;
-  --info-color: #17a2b8;
+  --primary: #FF6B35;
+  --primary-light: #FF9E58;
+  --primary-dark: #E05A2B;
+  --secondary: #004E89;
+  --accent: #FFD166;
+  --light: #F7F7F7;
+  --dark: #333333;
+  --gray: #E0E0E0;
+  --error: #D32F2F;
+  --success: #388E3C;
+  --health: #4CAF50;
+  --productivity: #2196F3;
 }
 
+/* Estilos base */
 * {
   margin: 0;
   padding: 0;
@@ -19,7 +23,7 @@
 }
 
 body {
-  background-color: #f5f7fa;
+  background-color: var(--light);
 }
 
 .principal-container {
@@ -46,6 +50,7 @@ body {
   align-items: center;
   cursor: pointer;
   transition: transform 0.2s;
+  gap: 10px;
 }
 
 .navbar-brand:hover {
@@ -55,13 +60,14 @@ body {
 .navbar-logo {
   width: 40px;
   height: 40px;
-  margin-right: 10px;
 }
 
 .navbar-title {
   font-size: 1.5rem;
   font-weight: 700;
-  color: var(--primary-color);
+  color: var(--primary);
+  text-transform: uppercase;
+  letter-spacing: 1px;
 }
 
 .navbar-menu {
@@ -74,7 +80,7 @@ body {
   border: none;
   padding: 0.5rem 1rem;
   font-size: 1rem;
-  color: var(--dark-color);
+  color: var(--dark);
   cursor: pointer;
   transition: all 0.3s;
   border-radius: 5px;
@@ -82,18 +88,19 @@ body {
 }
 
 .nav-link:hover {
-  color: var(--primary-color);
-  background-color: rgba(74, 111, 165, 0.1);
+  color: var(--primary);
+  background-color: rgba(255, 107, 53, 0.1);
 }
 
 .nav-link.active {
   color: white;
-  background-color: var(--primary-color);
+  background-color: var(--primary);
+  box-shadow: 0 4px 8px rgba(255, 107, 53, 0.3);
 }
 
 .logout-btn {
   padding: 0.5rem 1rem;
-  background-color: var(--danger-color);
+  background-color: var(--error);
   color: white;
   border: none;
   border-radius: 5px;
@@ -103,7 +110,7 @@ body {
 }
 
 .logout-btn:hover {
-  background-color: #c82333;
+  background-color: #B71C1C;
   transform: translateY(-2px);
 }
 
@@ -111,55 +118,159 @@ body {
 .principal-content {
   flex: 1;
   padding: 2rem;
-  background-color: #f8f9fa;
+  background-color: var(--light);
 }
 
-/* Sección de bienvenida */
-.welcome-section {
+/* Dashboard */
+.dashboard {
   max-width: 1200px;
   margin: 0 auto;
-  text-align: center;
 }
 
-.welcome-section h2 {
+.welcome-banner {
+  text-align: center;
+  margin-bottom: 3rem;
+  padding: 2rem;
+  background: linear-gradient(135deg, var(--primary-light), var(--primary));
+  border-radius: 16px;
+  color: white;
+  box-shadow: 0 4px 20px rgba(255, 107, 53, 0.2);
+}
+
+.welcome-banner h1 {
   font-size: 2.5rem;
-  color: var(--primary-color);
   margin-bottom: 1rem;
 }
 
-.welcome-section p {
+.welcome-banner p {
   font-size: 1.2rem;
-  color: var(--dark-color);
-  margin-bottom: 2rem;
+  opacity: 0.9;
 }
 
-.welcome-cards {
+.recommendations-section {
+  margin-bottom: 3rem;
+}
+
+.section-title {
+  font-size: 1.8rem;
+  color: var(--dark);
+  margin-bottom: 1.5rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 3px solid var(--primary);
+  display: inline-block;
+}
+
+.tips-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
   gap: 2rem;
-  margin-top: 2rem;
 }
 
-.welcome-card {
+.tip-card {
   background: white;
-  border-radius: 10px;
-  padding: 2rem;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  transition: transform 0.3s, box-shadow 0.3s;
-  cursor: pointer;
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
 }
 
-.welcome-card:hover {
+.tip-card:hover {
   transform: translateY(-5px);
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
 }
 
-.welcome-card h3 {
-  color: var(--secondary-color);
-  margin-bottom: 0.5rem;
+.tip-card::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 5px;
+  height: 100%;
 }
 
-.welcome-card p {
-  color: #666;
-  margin-bottom: 0;
+.tip-card.health::after {
+  background-color: var(--health);
+}
+
+.tip-card.productivity::after {
+  background-color: var(--productivity);
+}
+
+.tip-icon {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+}
+
+.tip-card h3 {
+  font-size: 1.3rem;
+  margin-bottom: 0.8rem;
+  color: var(--dark);
+}
+
+.tip-card p {
+  color: #555;
+  margin-bottom: 1.5rem;
+  line-height: 1.5;
+}
+
+.tip-category {
+  display: inline-block;
+  padding: 0.3rem 0.8rem;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.tip-card.health .tip-category {
+  background-color: rgba(76, 175, 80, 0.1);
+  color: var(--health);
+}
+
+.tip-card.productivity .tip-category {
+  background-color: rgba(33, 150, 243, 0.1);
+  color: var(--productivity);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .navbar {
+    flex-direction: column;
+    padding: 1rem;
+    gap: 1rem;
+  }
+  
+  .navbar-menu {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  
+  .welcome-banner h1 {
+    font-size: 2rem;
+  }
+  
+  .welcome-banner p {
+    font-size: 1rem;
+  }
+  
+  .section-title {
+    font-size: 1.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .tips-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .principal-content {
+    padding: 1rem;
+  }
+  
+  .welcome-banner {
+    padding: 1.5rem 1rem;
+  }
 }

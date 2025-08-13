@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './principal.css';
-import habitosIcon from '/imagenes/habitos-icono.png';
 import logo from '/imagenes/necesidades.png';
 
 // Componentes
@@ -15,55 +14,100 @@ const Principal = ({ userId }) => {
   const API_URL = 'http://localhost:3000';
   const navigate = useNavigate();
   const [activeSection, setActiveSection] = useState('inicio');
-  const [datosCardiacos, setDatosCardiacos] = useState([]);
+  const [healthTips, setHealthTips] = useState([]);
+  const [productivityTips, setProductivityTips] = useState([]);
 
-  // Obtener datos del sensor cardíaco
+  // Datos de ejemplo para recomendaciones
   useEffect(() => {
-    const fetchDatos = async () => {
-      try {
-        const res = await fetch(`${API_URL}/api/sensores/${userId}`);
-        const data = await res.json();
-
-        console.log("Datos recibidos del backend:", data);
-
-        const filtrado = data
-          .filter(d => d.tipo_sensor === 'cardiaco')
-          .map(d => ({
-            ...d,
-            timestamp: new Date(d.timestamp)
-          }));
-
-        console.log("Datos filtrados (cardiaco):", filtrado);
-
-        setDatosCardiacos(filtrado);
-      } catch (err) {
-        console.error('Error al cargar datos del sensor cardíaco', err);
+    // En una aplicación real, estos datos vendrían de una API
+    const mockHealthTips = [
+      {
+        id: 1,
+        title: "Hidratación adecuada",
+        description: "Bebe al menos 8 vasos de agua al día para mantener tu cuerpo hidratado.",
+        category: "Salud",
+        icon: "💧"
+      },
+      {
+        id: 2,
+        title: "Descanso nocturno",
+        description: "Duerme 7-8 horas cada noche para mejorar tu concentración y salud general.",
+        category: "Salud",
+        icon: "😴"
+      },
+      {
+        id: 3,
+        title: "Ejercicio diario",
+        description: "Realiza al menos 30 minutos de actividad física moderada cada día.",
+        category: "Salud",
+        icon: "🏃‍♂️"
       }
-    };
+    ];
 
-    if (userId) fetchDatos();
-  }, [userId]);
+    const mockProductivityTips = [
+      {
+        id: 1,
+        title: "Técnica Pomodoro",
+        description: "Trabaja en intervalos de 25 minutos con descansos de 5 minutos para mayor productividad.",
+        category: "Productividad",
+        icon: "⏱️"
+      },
+      {
+        id: 2,
+        title: "Lista de tareas",
+        description: "Prioriza tus tareas diarias usando el método ABCDE para una mejor organización.",
+        category: "Productividad",
+        icon: "📝"
+      },
+      {
+        id: 3,
+        title: "Espacio de trabajo",
+        description: "Mantén tu área de trabajo limpia y ordenada para mejorar tu concentración.",
+        category: "Productividad",
+        icon: "🧹"
+      }
+    ];
+
+    setHealthTips(mockHealthTips);
+    setProductivityTips(mockProductivityTips);
+  }, []);
 
   // Función que renderiza el contenido según la sección activa
   const renderSection = () => {
     switch(activeSection) {
       case 'inicio':
         return (
-          <div className="welcome-section">
-            <h2>Bienvenido a SmartRoutine</h2>
-            <p>Tu aplicación para el seguimiento de hábitos y salud</p>
-            <div className="welcome-cards">
-              <div className="welcome-card">
-                <h3>Mis Hábitos</h3>
-                <p>Administra tus hábitos diarios</p>
+          <div className="dashboard">
+            <div className="welcome-banner">
+              <h1>Bienvenido a tu Dashboard</h1>
+              <p>Aquí encontrarás recomendaciones personalizadas para mejorar tu salud y productividad</p>
+            </div>
+            
+            <div className="recommendations-section">
+              <h2 className="section-title">Recomendaciones de Salud</h2>
+              <div className="tips-grid">
+                {healthTips.map(tip => (
+                  <div key={tip.id} className="tip-card health">
+                    <div className="tip-icon">{tip.icon}</div>
+                    <h3>{tip.title}</h3>
+                    <p>{tip.description}</p>
+                    <span className="tip-category">{tip.category}</span>
+                  </div>
+                ))}
               </div>
-              <div className="welcome-card">
-                <h3>Mi Progreso</h3>
-                <p>Revisa tus estadísticas</p>
-              </div>
-              <div className="welcome-card">
-                <h3>Sensores</h3>
-                <p>Monitorea tus datos de salud</p>
+            </div>
+            
+            <div className="recommendations-section">
+              <h2 className="section-title">Hábitos Productivos</h2>
+              <div className="tips-grid">
+                {productivityTips.map(tip => (
+                  <div key={tip.id} className="tip-card productivity">
+                    <div className="tip-icon">{tip.icon}</div>
+                    <h3>{tip.title}</h3>
+                    <p>{tip.description}</p>
+                    <span className="tip-category">{tip.category}</span>
+                  </div>
+                ))}
               </div>
             </div>
           </div>
@@ -77,13 +121,9 @@ const Principal = ({ userId }) => {
       case 'configuracion':
         return <Configuracion userId={userId} />;
       case 'grafica':
-        return <GraficaSensor userId={userId} />;  // Así debe verse
+        return <GraficaSensor userId={userId} />;
       default:
-        return (
-          <div className="welcome-section">
-            <h2>Bienvenido a SmartRoutine</h2>
-          </div>
-        );
+        return <div className="dashboard">Selecciona una opción del menú</div>;
     }
   };
 
@@ -92,7 +132,7 @@ const Principal = ({ userId }) => {
       <nav className="navbar">
         <div className="navbar-brand" onClick={() => setActiveSection('inicio')}>
           <img src={logo} alt="Logo" className="navbar-logo" />
-          <span className="navbar-title">SmartRoutine</span>
+          <span className="navbar-title">SMART ROUTINE</span>
         </div>
         
         <div className="navbar-menu">

@@ -1,154 +1,331 @@
+/* Variables de color */
+:root {
+  --primary: #FF6B35;
+  --primary-light: #FF9E58;
+  --primary-dark: #E05A2B;
+  --secondary: #004E89;
+  --accent: #FFD166;
+  --light: #F7F7F7;
+  --dark: #333333;
+  --gray: #E0E0E0;
+  --error: #D32F2F;
+  --success: #388E3C;
+}
+
+/* Estilos base */
 .logros-container {
   max-width: 1200px;
   margin: 0 auto;
-  padding: 20px;
+  padding: 2rem;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
-.error-message {
-  color: #d32f2f;
-  background-color: #ffebee;
-  padding: 10px 15px;
-  border-radius: 4px;
-  margin-bottom: 20px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+.logros-header {
+  text-align: center;
+  margin-bottom: 3rem;
 }
 
+.section-title {
+  font-size: 2.5rem;
+  color: var(--primary);
+  margin-bottom: 0.5rem;
+  position: relative;
+  display: inline-block;
+}
+
+.section-title::after {
+  content: '';
+  display: block;
+  width: 60px;
+  height: 4px;
+  background: var(--primary);
+  margin: 0.5rem auto;
+  border-radius: 2px;
+}
+
+.section-subtitle {
+  color: var(--dark);
+  opacity: 0.8;
+  font-size: 1.1rem;
+}
+
+/* Mensaje de error */
+.error-message {
+  background: rgba(211, 47, 47, 0.1);
+  border-left: 4px solid var(--error);
+  padding: 1rem;
+  border-radius: 8px;
+  margin-bottom: 2rem;
+  display: flex;
+  gap: 1rem;
+  align-items: flex-start;
+}
+
+.error-message svg {
+  flex-shrink: 0;
+  width: 24px;
+  height: 24px;
+  fill: var(--error);
+}
+
+.error-message p {
+  margin: 0 0 0.5rem 0;
+  color: var(--error);
+}
+
+.error-message button {
+  background: none;
+  border: none;
+  color: var(--error);
+  font-weight: 600;
+  cursor: pointer;
+  padding: 0;
+  text-decoration: underline;
+}
+
+/* Estado de carga */
 .cargando {
   text-align: center;
-  padding: 40px;
-  color: #666;
+  padding: 3rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
 }
 
+.cargando .spinner {
+  width: 50px;
+  height: 50px;
+  border: 5px solid rgba(255, 107, 53, 0.2);
+  border-radius: 50%;
+  border-top-color: var(--primary);
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* Resumen de logros */
 .resumen-logros {
-  margin-bottom: 30px;
+  margin-bottom: 3rem;
 }
 
 .tarjeta-resumen {
-  background: #ffffff;
-  border-radius: 8px;
-  padding: 20px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  max-width: 400px;
+  background: white;
+  border-radius: 16px;
+  padding: 2rem;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  max-width: 500px;
   margin: 0 auto;
 }
 
 .tarjeta-resumen h3 {
   margin-top: 0;
-  color: #333;
+  margin-bottom: 1.5rem;
+  color: var(--dark);
+  text-align: center;
+  font-size: 1.5rem;
 }
 
-.tarjeta-resumen .numero {
-  font-size: 24px;
-  font-weight: bold;
-  color: #4caf50;
+.progreso-info {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
 }
 
-.tarjeta-resumen .total {
-  font-weight: bold;
+.progreso-circulo {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  background: var(--primary);
+  color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+
+.progreso-circulo::after {
+  content: '';
+  position: absolute;
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  border: 2px dashed white;
+  opacity: 0.3;
+}
+
+.progreso-circulo .numero {
+  font-size: 2.5rem;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.progreso-circulo .total {
+  font-size: 1.2rem;
+  opacity: 0.8;
+}
+
+.progreso-texto {
+  flex: 1;
+}
+
+.progreso-texto p {
+  margin: 0 0 0.5rem 0;
+  color: var(--dark);
+  font-weight: 500;
 }
 
 .barra-progreso {
   height: 10px;
-  background: #e0e0e0;
+  background: var(--gray);
   border-radius: 5px;
-  margin-top: 10px;
   overflow: hidden;
 }
 
 .barra-progreso .progreso {
   height: 100%;
-  background: #4caf50;
-  transition: width 0.3s ease;
+  background: var(--primary);
+  transition: width 0.5s ease;
 }
 
-.lista-logros h3 {
-  margin-bottom: 20px;
-  padding-bottom: 10px;
-  border-bottom: 1px solid #eee;
+/* Lista de logros */
+.lista-logros {
+  margin-top: 3rem;
+}
+
+.lista-titulo {
+  color: var(--dark);
+  font-size: 1.8rem;
+  margin-bottom: 2rem;
+  padding-bottom: 1rem;
+  border-bottom: 2px solid var(--gray);
 }
 
 .logros-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  gap: 20px;
+  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+  gap: 1.5rem;
 }
 
 .tarjeta-logro {
-  background: #fff;
-  border-radius: 8px;
-  overflow: hidden;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
   display: flex;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  transition: all 0.3s ease;
+  border-left: 4px solid;
+  overflow: hidden;
 }
 
 .tarjeta-logro:hover {
   transform: translateY(-5px);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
-}
-
-.tarjeta-logro.desbloqueado {
-  border-left: 4px solid #4caf50;
-}
-
-.tarjeta-logro.bloqueado {
-  opacity: 0.7;
-  border-left: 4px solid #9e9e9e;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
 }
 
 .icono-logro {
-  font-size: 40px;
-  padding: 20px;
+  width: 80px;
   display: flex;
   align-items: center;
   justify-content: center;
-  background: rgba(76, 175, 80, 0.1);
-  color: #4caf50;
-}
-
-.tarjeta-logro.bloqueado .icono-logro {
-  background: rgba(158, 158, 158, 0.1);
-  color: #9e9e9e;
+  font-size: 2.5rem;
+  transition: all 0.3s ease;
 }
 
 .contenido-logro {
-  padding: 15px;
+  padding: 1.5rem;
   flex: 1;
 }
 
 .contenido-logro h4 {
-  margin: 0 0 5px 0;
-  color: #333;
+  margin: 0 0 0.5rem 0;
+  color: var(--dark);
+  font-size: 1.2rem;
 }
 
 .contenido-logro p {
-  margin: 0 0 10px 0;
-  color: #666;
-  font-size: 14px;
+  margin: 0 0 1rem 0;
+  color: #555;
+  line-height: 1.5;
 }
 
 .estado-logro {
-  font-size: 12px;
-  font-weight: bold;
+  font-size: 0.9rem;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.estado-logro svg {
+  width: 18px;
+  height: 18px;
 }
 
 .desbloqueado-texto {
-  color: #4caf50;
+  color: var(--success);
+}
+
+.desbloqueado-texto svg {
+  fill: var(--success);
 }
 
 .bloqueado-texto {
-  color: #9e9e9e;
+  color: var(--dark);
+  opacity: 0.6;
 }
 
+.bloqueado-texto svg {
+  fill: var(--dark);
+  opacity: 0.6;
+}
+
+/* Responsive */
 @media (max-width: 768px) {
+  .logros-container {
+    padding: 1.5rem;
+  }
+  
+  .section-title {
+    font-size: 2rem;
+  }
+  
+  .progreso-info {
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+  
   .logros-grid {
     grid-template-columns: 1fr;
   }
+}
+
+@media (max-width: 480px) {
+  .logros-container {
+    padding: 1rem;
+  }
+  
+  .section-title {
+    font-size: 1.8rem;
+  }
   
   .tarjeta-resumen {
-    max-width: 100%;
+    padding: 1.5rem;
+  }
+  
+  .progreso-circulo {
+    width: 80px;
+    height: 80px;
+  }
+  
+  .progreso-circulo::after {
+    width: 70px;
+    height: 70px;
+  }
+  
+  .progreso-circulo .numero {
+    font-size: 2rem;
   }
 }

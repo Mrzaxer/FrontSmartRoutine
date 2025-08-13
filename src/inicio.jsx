@@ -19,7 +19,6 @@ const Inicio = () => {
     <div className={styles.container} style={{ backgroundImage: `url(${fondo})` }}>
       <nav className={styles.navbar}>
         <div className={styles.navbarLogo}>
-          <img src={logo} alt="Logo" className={styles.logo} />
           <h1 className={styles.navbarTitulo}>SMART ROUTINE</h1>
         </div>
       </nav>
@@ -28,7 +27,7 @@ const Inicio = () => {
         <div className={styles.cajaInformacion}>
           <div className={styles.contenidoTexto}>
             <p>"Bienvenido"</p>
-            <p>"Haz que los pequeños habitos y las grandes metas sean alcanzables"</p>
+            <p>"Haz que los pequeños hábitos y las grandes metas sean alcanzables"</p>
           </div>
           <div className={styles.contenidoImagen}>
             <img 

@@ -1,218 +1,394 @@
-.configuracion-container {
-  max-width: 800px;
-  margin: 0 auto;
-  padding: 20px;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+:root {
+  --primary: #4a6bff;
+  --primary-light: #7d95ff;
+  --primary-dark: #2a4bdb;
+  --secondary: #ff6b4a;
+  --accent: #ffd166;
+  --success: #2ed573;
+  --error: #ff4757;
+  --warning: #ffa502;
+  --info: #1e90ff;
+  --light: #f8f9fa;
+  --dark: #2d3436;
+  --gray: #dfe6e9;
+  --border: #e0e0e0;
 }
 
+/* Estilos base */
+.configuracion-container {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 2rem;
+  font-family: 'Segoe UI', 'Roboto', 'Helvetica Neue', sans-serif;
+  color: var(--dark);
+}
+
+.configuracion-container h2 {
+  font-size: 2.2rem;
+  margin-bottom: 2rem;
+  color: var(--primary);
+  position: relative;
+  padding-bottom: 1rem;
+}
+
+.configuracion-container h2::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 60px;
+  height: 4px;
+  background: linear-gradient(90deg, var(--primary), var(--secondary));
+  border-radius: 2px;
+}
+
+/* Pestañas */
 .configuracion-tabs {
   display: flex;
-  border-bottom: 1px solid #ddd;
-  margin-bottom: 20px;
+  gap: 0.5rem;
+  margin-bottom: 2rem;
+  border-bottom: 1px solid var(--border);
 }
 
 .configuracion-tabs button {
-  padding: 10px 20px;
+  padding: 0.75rem 1.5rem;
   background: none;
   border: none;
   border-bottom: 3px solid transparent;
   cursor: pointer;
-  font-size: 16px;
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--dark);
   transition: all 0.3s;
+  position: relative;
+  border-radius: 6px 6px 0 0;
 }
 
 .configuracion-tabs button:hover {
-  background: #f5f5f5;
+  background: rgba(74, 107, 255, 0.1);
+  color: var(--primary);
 }
 
 .configuracion-tabs button.active {
-  border-bottom-color: #4caf50;
-  font-weight: bold;
+  color: var(--primary);
+  border-bottom-color: var(--primary);
+  background: rgba(74, 107, 255, 0.05);
 }
 
+/* Contenido */
 .configuracion-contenido {
-  background: #fff;
-  padding: 20px;
-  border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  background: white;
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
 }
 
+/* Mensajes */
 .mensaje {
-  padding: 10px 15px;
-  border-radius: 4px;
-  margin-bottom: 20px;
+  padding: 1rem 1.5rem;
+  border-radius: 8px;
+  margin-bottom: 2rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  animation: fadeIn 0.3s ease-out;
+  border-left: 4px solid transparent;
 }
 
 .mensaje.error {
-  background-color: #ffebee;
-  color: #d32f2f;
+  background-color: rgba(255, 71, 87, 0.1);
+  color: var(--error);
+  border-left-color: var(--error);
 }
 
 .mensaje.exito {
-  background-color: #e8f5e9;
-  color: #2e7d32;
+  background-color: rgba(46, 213, 115, 0.1);
+  color: var(--success);
+  border-left-color: var(--success);
 }
 
 .mensaje button {
   background: none;
   border: none;
   cursor: pointer;
-  font-size: 16px;
+  font-size: 1.2rem;
   color: inherit;
+  padding: 0 0.5rem;
 }
 
+/* Estado de carga */
 .cargando {
   text-align: center;
-  padding: 40px;
-  color: #666;
+  padding: 3rem;
+  color: var(--dark);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
 }
 
-/* Estilos para la sección de perfil */
-.seccion-perfil .avatar-container {
+.spinner {
+  width: 40px;
+  height: 40px;
+  border: 4px solid rgba(74, 107, 255, 0.2);
+  border-radius: 50%;
+  border-top-color: var(--primary);
+  animation: spin 1s linear infinite;
+}
+
+/* Sección de perfil */
+.seccion-perfil h3,
+.seccion-preferencias h3,
+.seccion-seguridad h3 {
+  font-size: 1.5rem;
+  margin-bottom: 1.5rem;
+  color: var(--primary-dark);
   display: flex;
   align-items: center;
-  margin-bottom: 20px;
-  gap: 20px;
+  gap: 0.5rem;
+}
+
+.avatar-container {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  margin-bottom: 2rem;
 }
 
 .avatar {
-  width: 100px;
-  height: 100px;
+  width: 120px;
+  height: 120px;
   border-radius: 50%;
   object-fit: cover;
-  border: 2px solid #ddd;
+  border: 3px solid var(--gray);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s;
 }
 
-.avatar-actions p {
-  margin: 5px 0 0 0;
-  font-size: 12px;
-  color: #666;
+.avatar:hover {
+  transform: scale(1.05);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+.avatar-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
 }
 
 .btn-cambiar-avatar {
-  padding: 8px 15px;
-  background: #4caf50;
+  padding: 0.75rem 1.5rem;
+  background: var(--primary);
   color: white;
   border: none;
-  border-radius: 4px;
+  border-radius: 8px;
   cursor: pointer;
-  transition: background 0.3s;
+  font-weight: 600;
+  transition: all 0.3s;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  width: fit-content;
 }
 
 .btn-cambiar-avatar:hover {
-  background: #3e8e41;
+  background: var(--primary-dark);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(74, 107, 255, 0.3);
 }
 
-/* Estilos para formularios */
+.avatar-actions p {
+  margin: 0;
+  font-size: 0.9rem;
+  color: #666;
+}
+
+/* Formularios */
 .form-group {
-  margin-bottom: 15px;
+  margin-bottom: 1.5rem;
 }
 
 .form-group label {
   display: block;
-  margin-bottom: 5px;
-  font-weight: 500;
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+  color: var(--dark);
 }
 
 .form-group input,
 .form-group select,
 .form-group textarea {
   width: 100%;
-  padding: 10px;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-  font-size: 16px;
+  padding: 0.75rem 1rem;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  font-size: 1rem;
+  transition: all 0.3s;
 }
 
-.form-group input[type="checkbox"] {
-  width: auto;
-  margin-right: 10px;
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(74, 107, 255, 0.2);
+}
+
+.form-group input[disabled] {
+  background: var(--light);
+  color: #666;
 }
 
 .checkbox-group {
   display: flex;
   align-items: center;
+  gap: 0.5rem;
 }
 
-/* Estilos para la sección de seguridad */
+.checkbox-group input {
+  width: auto;
+  margin: 0;
+}
+
+.checkbox-group label {
+  margin: 0;
+  font-weight: normal;
+}
+
+/* Sección de seguridad */
 .requisitos-password {
-  background: #f5f5f5;
-  padding: 10px 15px;
-  border-radius: 4px;
-  margin: 15px 0;
+  background: var(--light);
+  padding: 1.5rem;
+  border-radius: 8px;
+  margin: 1.5rem 0;
 }
 
 .requisitos-password p {
   margin-top: 0;
-  font-weight: 500;
+  margin-bottom: 0.5rem;
+  font-weight: 600;
 }
 
 .requisitos-password ul {
-  margin-bottom: 0;
-  padding-left: 20px;
+  margin: 0;
+  padding-left: 1.5rem;
 }
 
 .requisitos-password li {
-  font-size: 14px;
+  font-size: 0.9rem;
+  margin-bottom: 0.25rem;
 }
 
-/* Botón de guardar */
+.requisitos-password li::marker {
+  color: var(--primary);
+}
+
+/* Botones */
 .btn-guardar {
-  padding: 10px 20px;
-  background: #4caf50;
+  padding: 0.75rem 1.5rem;
+  background: var(--primary);
   color: white;
   border: none;
-  border-radius: 4px;
+  border-radius: 8px;
   cursor: pointer;
-  font-size: 16px;
-  transition: background 0.3s;
-  margin-top: 10px;
+  font-size: 1rem;
+  font-weight: 600;
+  transition: all 0.3s;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
 }
 
 .btn-guardar:hover {
-  background: #3e8e41;
+  background: var(--primary-dark);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(74, 107, 255, 0.3);
 }
 
-/* Estilos responsivos */
-@media (max-width: 768px) {
-  .configuracion-tabs {
-    flex-direction: column;
-  }
-  
-  .configuracion-tabs button {
-    border-bottom: none;
-    border-left: 3px solid transparent;
-    text-align: left;
-  }
-  
-  .configuracion-tabs button.active {
-    border-bottom: none;
-    border-left-color: #4caf50;
-  }
-  
-  .seccion-perfil .avatar-container {
-    flex-direction: column;
-    text-align: center;
-  }
-}
-
-/* Estilos para tema oscuro */
+/* Tema oscuro */
 body.tema-oscuro .configuracion-contenido {
-  background: #333;
-  color: #fff;
+  background: #2d3436;
+  color: white;
 }
 
 body.tema-oscuro .form-group input,
-body.tema-oscuro .form-group select {
-  background: #444;
-  color: #fff;
-  border-color: #555;
+body.tema-oscuro .form-group select,
+body.tema-oscuro .form-group textarea {
+  background: #3a4346;
+  color: white;
+  border-color: #4a5255;
 }
 
 body.tema-oscuro .requisitos-password {
-  background: #444;
-  color: #ddd;
+  background: #3a4346;
+  color: #dfe6e9;
+}
+
+body.tema-oscuro .configuracion-tabs button {
+  color: #dfe6e9;
+}
+
+body.tema-oscuro .configuracion-tabs button:hover {
+  background: rgba(74, 107, 255, 0.2);
+}
+
+body.tema-oscuro .configuracion-tabs button.active {
+  color: var(--primary-light);
+}
+
+/* Animaciones */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .configuracion-container {
+    padding: 1.5rem 1rem;
+  }
+  
+  .configuracion-tabs {
+    flex-wrap: wrap;
+  }
+  
+  .configuracion-contenido {
+    padding: 1.5rem;
+  }
+  
+  .avatar-container {
+    flex-direction: column;
+    text-align: center;
+    gap: 1rem;
+  }
+  
+  .avatar-actions {
+    align-items: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .configuracion-container h2 {
+    font-size: 1.8rem;
+  }
+  
+  .configuracion-tabs button {
+    padding: 0.5rem 1rem;
+    font-size: 0.9rem;
+  }
+  
+  .seccion-perfil h3,
+  .seccion-preferencias h3,
+  .seccion-seguridad h3 {
+    font-size: 1.3rem;
+  }
+  
+  .avatar {
+    width: 100px;
+    height: 100px;
+  }
 }
