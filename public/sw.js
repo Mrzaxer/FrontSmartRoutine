@@ -60,11 +60,10 @@ self.addEventListener('install', event => {
     caches.open("appShell_v1.1")
         .then(cache => {
             cache.addAll([
-                "/index.html",
-                "/src/main.jsx",
-                "/src/App.css",
-                "/vite.svg",
-                "/src/assets/react.svg",
+               "/",              // Vite sirve index automáticamente
+    "/manifest.json",
+    "/icons/icon-192.png",
+    "/icons/icon-512.png",
             ]);
         });
     self.skipWaiting();

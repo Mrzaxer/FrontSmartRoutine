@@ -107,7 +107,7 @@ async function subscribeToPush(registration) {
     console.log("Suscripción generada:", subscription);
 
     // Enviar suscripción a tu backend o archivo local
-    await fetch("http://localhost:3000/api/notificaciones/save-subscription", {
+    await fetch("https://backsmartroutine-2syq.onrender.com/api/notificaciones/save-subscription", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(subscription),
