@@ -3,7 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import './registro.css';
 
 function Registro() {
-  const API_URL = 'http://localhost:3000/api/usuarios';
+  const API_URL = 'https://backsmartroutine-2syq.onrender.com/api/usuarios';
   const navigate = useNavigate();
 
   const [formData, setFormData] = useState({
